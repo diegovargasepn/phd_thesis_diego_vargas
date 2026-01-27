@@ -1,0 +1,104 @@
+\documentclass[openany,12pt]{book}
+
+% Encoding and Language
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+
+% Mathematics Packages
+\usepackage{amsmath, amssymb, amsfonts, amsthm, mathtools, mathabx}
+
+% Geometry and Formatting
+\usepackage[a4paper,left=30mm,right=20mm,top=30mm,bottom=25mm]{geometry}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage{varioref}
+\usepackage{nicefrac}
+
+% Colors and Graphics
+\usepackage{xcolor, graphicx}
+
+% Tables and Lists
+\usepackage{multirow, booktabs}
+\usepackage{siunitx}
+\usepackage{caption, subcaption}
+
+% TikZ and PGFPlots
+\usepackage{tikz}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{external} 
+\tikzexternalize
+\tikzset{external/mode=graphics if exists}
+\usetikzlibrary{external}
+
+% Algorithms
+\usepackage{algorithm, algpseudocode}
+
+% Other Useful Packages
+\usepackage{comment, pdflscape, diagbox}
+\usepackage[colorinlistoftodos]{todonotes}
+
+% Bibliography
+\usepackage{biblatex}
+\addbibresource{biblio.bib}
+
+% Custom Commands
+\newcommand{\norm}[1]{\lVert #1 \rVert}
+\newcommand{\hcu}[1]{H_{0}^{1}(#1)}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\om}{\Omega}
+\newcommand{\ga}{\Gamma}
+\newcommand{\ind}{\mathbf{I}}
+\newcommand{\sign}{\mathrm{sign}}
+\newcommand{\fsparse}{\Upsilon}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\extreals}{\overline{\mathbb{R}}}
+\newcommand{\warrow}{\rightharpoonup}
+\renewcommand{\l}{\left}
+\renewcommand{\r}{\right}
+\renewcommand{\div}{\text{div\,}}
+\newcommand{\arrow}{\rightarrow}
+
+% Mathematical Operators
+\DeclareMathOperator{\argmin}{argmin}
+\DeclareMathOperator{\meas}{meas}
+\DeclareMathOperator{\jump}{\jmath}
+\DeclareMathOperator*{\esssup}{ess\;sup}
+\DeclareMathOperator{\dom}{dom}
+\DeclareMathOperator{\epig}{epig}
+
+% Theorem Environments
+\newtheorem{assumption}{Assumption}[chapter]
+\newtheorem{proposition}[assumption]{Proposition}
+\newtheorem{definition}[assumption]{Definition}
+\newtheorem{lemma}[assumption]{Lemma}
+\newtheorem{remark}[assumption]{Remark}
+\newtheorem{corollary}[assumption]{Corollary}
+\newtheorem{theorem}[assumption]{Theorem}
+\newtheorem{example}{Example}
+
+% Number equations within sections
+\numberwithin{equation}{chapter}
+
+% Paragraph Formatting
+\setlength{\parindent}{0cm}
+
+\begin{document}
+
+%\include{cover}
+%\include{declaracion}
+%\include{certificacion}
+%\include{agradecimiento}
+%\tableofcontents
+%\include{intro}
+%\include{chap1}
+\include{chap2}
+%\include{chap3}
+%\include{chap4}
+%\include{chap5}
+%\include{conclution}
+
+\printbibliography
+
+\end{document}
