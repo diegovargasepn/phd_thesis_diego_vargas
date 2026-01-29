@@ -815,7 +815,141 @@ Moreover, if $\rho_1 + \rho_2 > 0$ (resp., $\rho_1^* + \rho_2^* > 0$), then
 
 \subsection{The Semismooth Newton (SSN) algorithm}
 
+The semismooth Newton (SSN) method is formulated within the framework of solving optimization problems 
+of the form
+
+\begin{equation}
+\min_{y,u\in U\times Y} J(y,u)
+\quad \text{subject to } E(y,u)=0 \text{ and } g(y,u) \in C.
+\end{equation}
 
 
+where $U$ and $Y$ denote the control and state spaces, respectively. Here, $J$ represents a cost functional, 
+$E$ denotes a partial differential equation linking the control $u$ and the state $y$, and $g(y,u)\in C$ 
+represents a generic inequality-type constraint. The mapping $g$ takes values in a vector of $m$ measurable 
+real-valued functions, while $C\subset \mathbb{R}^{m}$ is a closed and convex set.
+The goal of the method is to reformulate the stated problem, starting from first-order necessary optimality 
+conditions, into an equivalent system of equations of the form $F(u)=0$, where $F$ must be a semismooth 
+function—a concept that will be detailed later.
 
- 
+As pointed out in \cite{ulbrich}, the method was originally designed to address problems of this type in 
+finite-dimensional spaces. Some early contributions in this direction can be found in \cite{mifflin, qi, pang}, 
+with \cite{mifflin} being the first work to introduce the concept of semismoothness in finite-dimensional 
+settings. Extensions of several concepts from the theory of semismooth operators to Banach spaces were later 
+developed in works such as \cite{kummer, robinson, chen}. However, in \cite{ulbrich}, the use of superposition 
+operators makes it possible to transfer many essential features of semismooth Newton methods from 
+finite-dimensional spaces to general Banach spaces.
+
+The SSN method has been widely applied to optimal control problems governed by linear elliptic partial 
+differential equations and penalized with an $L^1$ term. In \cite{stadler}, it is shown that, under a 
+reformulation of the problem via a semismooth function, the method converges superlinearly, provided that 
+the initial iterate is sufficiently close to the solution. The convexity of the problem and the coercivity 
+of the differential operator play a fundamental role in establishing the convergence of the method. 
+In \cite{merino2021}, a direct application of the method is presented for problems involving $L^q$
+ penalization, with $q\in (0,1)$. A Huber-type regularization is introduced in order to show that the 
+ problem can be reformulated through a semismooth Newton function. However, no convergence proof of the 
+ method is provided therein.
+
+A generalization of Stadler’s analysis to problems governed by semilinear partial differential equations 
+is studied in \cite{casasmateos}. Nevertheless, the convergence proof in this setting requires the 
+development of second-order optimality conditions. For linear problems with $L^q$ penalization, one may 
+follow a combination of methods based on the results presented in \cite{stadler} and \cite{casasmateos}. 
+Hoever, a possible estension to the semilinear case is particularly difficult, since there exists only
+second order conditions like the presented in \cite{casas-wachsmuth}, which not implies directly enough 
+conditions to establish the convergence of the method.
+
+Before the introduction of the SSN algorithm, we present the definition of a semismooth function.
+
+\begin{definition}\label{def:semismooth}
+Let $X$ and $Y$ be Banach spaces, and let $V \subset X$ be an open set.
+Let $f : V \to Y$ and
+\[
+\partial^* f : V \rightrightarrows \mathcal{L}(X,Y)
+\]
+be a set-valued mapping such that $\partial^* f(y) \neq \emptyset$ for all $y \in V$.
+We say that $f$ is $\partial^*$-semismooth at $y \in V$ if $f$ is continuous at $y$ and
+\[
+\sup_{M \in \partial^* f(y+s)}
+\| f(y+s) - f(y) - Ms \|_{Y}
+= o(\|s\|_{X})
+\quad \text{as } \|s\|_{X} \to 0.
+\]
+Moreover, we say that $f$ is $\alpha$-order $\partial^*$-semismooth at $y$, $0 < \alpha \le 1$,
+if $f$ is continuous near $y$ and
+\[
+\sup_{M \in \partial^* f(y+s)}
+\| f(y+s) - f(y) - Ms \|_{Y}
+= O(\|s\|_{Y}^{1+\alpha})
+\quad \text{as } \|s\|_{X} \to 0.
+\]
+\end{definition}
+
+Now, assume that $f:V\subset X\to Y$ is a $\partial^*$-semismooth function. 
+We are interested in solving the equations
+\begin{equation}\label{eq:ssn_equation}
+f(y)=0.
+\end{equation}
+The following algorithm, called SSN algorithm, is implemented in order to find the root of $f$ as 
+shown in the last equation stablish. We assume that $Y$ is continuously
+and densely embedded in a bigger space $Y_0$.
+
+\begin{algorithm}[ht]
+\caption{Semismooth Newton method}
+\label{alg:ssn_ulbrich}
+\begin{algorithmic}[1]
+\State Choose an initial point $y_0 \in V$ and set $k = 0$.
+\While{stopping criterion not satisfied}
+\State Choose $M_k \in \partial^* f(y_k)$ and compute $s_k \in Y_0$ from
+\[
+M_k s_k = - f(y_k).
+\]
+\State Set $y_{k+1}^{0} = y_k + s_k$.
+\State Perform a smoothing step: $Y_0 \ni y_{k+1}^{0} \mapsto y_{k+1} = S_k\!\left(y_{k+1}^{0}\right) \in Y$.
+\If{$y_{k+1} = y_k$}
+\State \textbf{stop} with result $y^* = y_{k+1}$.
+\EndIf
+\State $k \gets k+1$.
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+The following assumption is crucial for the convergence of the SSN algorithm.
+\begin{assumption}\label{ass:ulbrich_3_12}
+The space $Y$ is continuously and densely embedded in a Banach space $Y_0$ such that:
+\begin{enumerate}
+\item[(a)] \emph{(Regularity condition)}  
+The operators $M_k$ map $Y_0$ continuously into $Z$ with bounded inverses, and there exists a constant
+$C_{M^{-1}} > 0$ such that
+\[
+\|M_k^{-1}\|_{\mathcal{L}(Z,Y_0)} \le C_{M^{-1}}.
+\]
+
+\item[(b)] \emph{(Smoothing condition)}  
+The smoothing steps in step 5 satisfy
+\[
+\|S_k(y_{k+1}^0) - \bar y\|_Y \le C_S \|y_{k+1}^0 - \bar y\|_{Y_0}
+\]
+for all $k$, where $\bar y \in Y$ solves~(3.7).
+\end{enumerate}
+\end{assumption}
+
+Under this Assumption, the following Theorem follows. For a proof 
+of this result, see \cite[Theorem 3.13]{ulbrich}
+
+\begin{theorem}\label{thm:ssn_convergence}
+Let $f : Y \supset V \to Z$ be an operator between Banach spaces defined on the open set $V$,
+with generalized differential $\partial^* f : V \rightrightarrows \mathcal{L}(Y,Z)$.
+Denote by $\bar y \in V$ a solution of \eqref{eq:ssn_equation} and let Assumption~\ref{ass:ulbrich_3_12} hold.
+Then the following assertions are valid:
+\begin{enumerate}
+\item[(a)]
+If $f$ is $\partial^*$-semismooth at $\bar y$, then there exists $\delta > 0$ such that,
+for all $y_0 \in \bar y + \delta B_Y$,
+Algorithm \ref{alg:ssn_ulbrich} either terminates with $y^* = y_k = \bar y$ or generates a sequence
+$(y_k) \subset V$ that converges $q$-superlinearly to $\bar y$ in $Y$.
+
+\item[(b)]
+If in~(a) the mapping $f$ is $\alpha$-order $\partial^*$-semismooth at $\bar y$,
+$0 < \alpha \le 1$, then the $q$-order of convergence is at least $1+\alpha$.
+\end{enumerate}
+\end{theorem}
