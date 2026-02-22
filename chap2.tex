@@ -34,7 +34,7 @@ To avoid introducing additional notation, we use the same symbol $f$ to denote i
 
 We recall a well-known result about continuity of Nemitski operators, see \cite{ambrosetti} for a detailed proof of this fact.
 
-\begin{theorem}
+\begin{theorem}\label{thm:nemitski}
     Let $f:\om\times\mathbb{R}\to \mathbb{R}$ a Caratheodory function such that, for  $p, q\ge 1$ and some constants $a, b>0$,
     \[
     |f(x,s)|\le a + b|s|^{\frac{p}{q}}.
@@ -119,24 +119,36 @@ Then, for a given function $u$, the problem:
 \end{cases}
 \end{equation}
 is called a second order partial differential equation. In our setting. Now, we say that the operator $A$ is uniformly elliptic if there exists a constant $\theta>0$ such that
-\[
+
+\begin{equation}\label{eq:coercivity_A}
 \sum_{i,j =1}^n a_{ij}(x)\xi_i\xi_j\ge \theta \norm{\xi}_2^2,
-\]
+\end{equation}
 for almost all $x\in \om$ and any $\xi \in\mathbb{R}^n$. The notation $\norm{\cdot}_2$ stands for the Euclidean norm in $\mathbb{R}^n$. 
 
 For any $y,z \in H_0^1(\om)$, we define 
-\begin{equation}\label{eq:bilinear_form}    a(y,z):=\int_{\om}\l(\sum_{i,j=1}^{n} a_{ij}(x)\frac{\partial y(x)}{\partial x_i}\frac{\partial z(x)}{\partial x_{j}}\; dx+\sum_{i=1}^{n}b_i(x)\frac{\partial y(x)}{\partial x_i}z(x)+c(x)y(x)z(x) \r)\; dx.
+\begin{equation}\label{eq:bilinear_form}    
+    a(y,z):=\int_{\om}\l(\sum_{i,j=1}^{n} a_{ij}(x)\frac{\partial y(x)}{\partial x_i}\frac{\partial z(x)}{\partial x_{j}}\; dx+\sum_{i=1}^{n}b_i(x)\frac{\partial y(x)}{\partial x_i}z(x)+c(x)y(x)z(x) \r)\; dx.
 \end{equation}
 
 $a$ is called the \textit{bilinear form associated to $A$}. Remember that a function $y\in H_0^1(\om)$ is called a solution to \eqref{eq:elliptic_pde} if
 
 \begin{equation}\label{eq:variational_formulation}
-a(y,z)=(u,z)_{L^2(\om)}, \quad \mbox{for all }z\in H_0^1(\om)
+a(y,v)=(u,v)_{L^2(\om)}, \quad \mbox{for all }v\in H_0^1(\om)
 \end{equation}
+
+In addition, from $A^*$ we denote as $a^*$ its bilinear form defined similar as \eqref{eq:bilinear_form}. Recall 
+that a function $v\in H_0^1(\om)$ is called a solution to the adjoint PDE equation associated to $A^*$ if 
+
+\begin{equation}\label{eq:variational_formulation*}
+a^*(y,z)=(u,z)_{L^2(\om)}, \quad \mbox{for all }z\in H_0^1(\om)
+\end{equation}
+
 
 The relation \eqref{eq:variational_formulation} is also called the \textit{variational formulation} of \eqref{eq:elliptic_pde}.
 
-Assuming that $A$ is coercive, $a_{ij}\in L^{\infty}(\om)$ and $c(x)\ge 0$ almost all $x\in\om$ it can be shown that the equation \eqref{eq:elliptic_pde} has a unique solution for any $u\in L^2(\om)$, see \cite[Remark 23]{brezis}. However, for results about regularity of solutions, it is necessary to introduce the concept of Lipschitz type domains.
+Assuming that $A$ is coercive, $a_{ij}\in L^{\infty}(\om)$ and $c(x)\ge 0$ almost all $x\in\om$ it can 
+be shown that the equation \eqref{eq:elliptic_pde} has a unique solution for any $u\in L^2(\om)$, 
+see \cite[Remark 23]{brezis}. However, for results about regularity of solutions, it is necessary to introduce the concept of Lipschitz type domains.
  
  \begin{definition}
 Let $\Omega \subset \mathbb{R}^n$, $n \ge 2$, be a bounded domain with boundary $\Gamma$.
@@ -183,14 +195,14 @@ y \in \overline{Q}_{N-1}, \quad h_i(y)-b < y_N < h_i(y).
  
  Now, if $b_i\equiv 0$ for all $i\in \{1,\cdots,n\}$, the following result follows:
 
- \begin{theorem}
+ \begin{theorem}\label{thm:existence_solution_elliptic_pde}
      Suppose that $\om$ is a Lipchitz-type domain, $a_{ij}\in L^{\infty}(\om)$, $b_i\equiv 0$ and $c(x)\ge 0$ for almost all $x\in \om$. Then, \eqref{eq:elliptic_pde} has a unique solution $y\in H_0^1(\om)$ for every $u\in L^2(\om)$. Moreover, we have that there exists a constant $\nu>0$ such that 
      \[     \norm{y}_{H_0^1(\om)}\le \nu \norm{u}_{L^2(\om)}.
      \]
  \end{theorem}
 For a proof of this Theorem, we refer to \cite[Theorem 2.7]{troeltzsch2010}.
 
-\subsection{Regularity of solutions}
+\subsection{Regularity of solutions}\label{subsection:regularity_pde_sol}
 
 Up to this point, we have established conditions that guarantee the existence and uniqueness of solutions to the equation \eqref{eq:elliptic_pde}. However, in order to derive error estimates within the framework of the finite element method (FEM), it is essential to investigate the regularity of weak solutions. Indeed, several results that will be used throughout this work rely on the fact that weak solutions possess a higher degree of regularity than $H_0^1$.
 
@@ -236,7 +248,24 @@ As shown in the previous four theorems, imposing higher regularity assumptions o
     Let $\om$ a convex and Lipschitz type domain, $a_{ij}, c \in L^{\infty}(\om)$. Then, the solution $y$ of \eqref{eq:elliptic_pde} belongs to $H^2(\om)$. 
 \end{theorem}
 
-
+\begin{remark}\label{rmrk:operator_S}    
+We finish this section showing the following result: thanks to Theorem 4.4 in 
+\cite{stampacchia65} and the continuous injection $L^2(\om) \hookrightarrow W^{-1,p}(\om)$ for a fixed
+ $p>n/2$, equation \eqref{eq:variational_formulation} admits a unique solution in $C(\bar\om)\cap H_0^1(\om)$. 
+We denote the linear and continuous operator $S:L^2(\om)\to L^{\infty}(\om)\cap H_0^1(\om)$,
+which assigns any $w\in L^2(\om)$  the corresponding state $y$  satisfying 
+\eqref{eq:variational_formulation} with $w$ as right-hand side. 
+The range of $S$ in $L^\infty(\om)$ complies better in our later discussions. 
+The continuity of $S$ also implies the existence of a constant $c_{\infty}>0$ such that 
+the solution $y=Sw$ of \eqref{eq:variational_formulation} satisfies
+\begin{equation}\label{eq:esti_state_uniform}
+    \norm{y}_{L^{\infty}(\om)}\le c_{\infty}\norm{w}_{L^2(\om),}
+\end{equation}
+Analogously, for the solution $z$ of \eqref{eq:variational_formulation*} it holds that 
+\begin{equation}\label{eq:esti_state*_uniform}
+    \norm{z}_{L^{\infty}(\om)}\le c_{\infty}^*\norm{w}_{L^2(\om),}
+\end{equation}
+\end{remark}
 
 
 
@@ -295,16 +324,23 @@ see \cite[Proposition 16.63]{combettes}. Clearly, the standar calculus rules for
 
 \subsection{$\Gamma-$ regularization or Partial Convexification of a non convex function}
 
-The $\Gamma$-regularization, also referred to as the partial convexification of a nonconvex function, is a strategy commonly employed to deal with optimal control problems involving nonconvex penalizations; see, for example, \cite[Remark 2.6]{ito-kunisch2014}, \cite{casasl0}, and \cite{wachsmuth2019}. This approach is particularly relevant for penalization terms of the form $\int_{\om} |u(x)|^q\; dx$, with $q\in [0,1)$, which are of special interest in the present work. A detailed discussion of this strategy can be found in \cite[Chapter 9]{ekeland}. The idea behind this approach is relatively simple. Suppose we consider a minimization problem of the form 
+The $\Gamma$-regularization, also referred to as the partial convexification of a 
+nonconvex function, is a strategy commonly employed to deal with optimal control 
+problems involving nonconvex penalizations; see, for example, 
+\cite[Remark 2.6]{ito-kunisch2014}, \cite{casasl0}, and \cite{wachsmuth2019}. 
+This approach is particularly relevant for penalization terms of the 
+form $\int_{\om} |u(x)|^q\; dx$, with $q\in [0,1)$, which are of special interest
+ in the present work. A detailed discussion of this strategy can be found in 
+ \cite[Chapter 9]{ekeland}. The idea behind this approach is relatively simple. Suppose we consider a minimization problem of the form 
 \[ 
 \begin{cases} \min_{u,y}\int_{\om}f(x, u(x), y(x))\; dx\\ \mbox{subejct to} \\
 u=Sy \end{cases}
 \]
 where $S$ is an operator relating a state $y$ to a control $u$, while the function $f$ is not necessarily convex. A natural question that arises in this setting concerns the relationship between the solutions of this problem and the solutions of the following minimization problem:
-\[ 
-\begin{cases} \min_{u,p}\int_{\om}f^{**}(x, u(x), y(x))\; dx\\ \mbox{subejct to}\\
+\begin{equation}\label{eq:problem_biconjugate}
+\begin{cases} \min_{u,y}\int_{\om}f^{**}(x, u(x), y(x))\; dx\\ \mbox{subejct to}\\
 u=Sy \end{cases}
-\]
+\end{equation}
 where $f^{**}$ represents the Fenchel biconjugate of $f$. As we will see below, the last problem is convex due to the properties of the biconjugate, and therefore, standar arguments about convex problems ca be used in order to argue existence of solutions. However, the relation between the solutions of the second and the first problem is a deicated issue. It seems that the second problem, in general, provides certain possible solutions to the first problem, but, under some estructural considerations. The general study of the relation between these two problems is explored in \cite[Chapter 9]{ekeland}. In our context, the $\Gamma-$regularization will be useful, in a similar way that in \cite{ito-kunisch2014, wachsmuth2019, casasl0}, and related works.
 
 First of all, we recall the definition of Fenchel conjugate and biconjugate of a function.
@@ -456,12 +492,12 @@ A similar analysis can be done for $t\le 0$, concluding that the lines of $a(t)$
     \phi_q(t)=\frac{\alpha}{2}|t|^2 + \beta |t|^q.
     \]
     Then, its biconjugate of $\phi_q$ is defined as
-    \[
+    \begin{equation}\label{eq:convex_envelope_phi}
     \phi_q^{**}(t)=\begin{cases}
         \phi_q(t), &|t|\ge t^*,\\
         \phi_{q}'(t^*)|t|, & |t|< t^*
     \end{cases}
-    \]
+\end{equation}
 \end{lemma}
 The second function that we consider is $\phi_0: \mathbb{R}\to [0,+\infty)$ defined as
 \[
@@ -504,26 +540,186 @@ and, following same arguments as before, we conclude the following result:
     \]
 \end{lemma}
 
-\newpage
+The followig Proposition will be useful in Chapter 3. It is based on the properties of 
+\eqref{eq:convex_envelope_phi}.
+\begin{proposition}
+    \label{prop:phi**_quadrature}
+    The function $\phi_q^{**}$ defined in \eqref{eq:convex_envelope_phi} satisfies the inequality
+    \[
+    \phi_q^{**}(t)\ge \frac{\alpha}{2}|t|^2,
+    \]
+    for all $t\in \mathbb{R}$.
+\end{proposition}
+\begin{proof}
+    When $|t|\ge t^*$, the result is inmediately. So, assume that $|t|<t^*$. Notice that
+    \[
+    \phi_{q}^{**}(t)\ge \frac{\alpha}{2}|t|^2\Leftrightarrow \l(\alpha t^*+\beta q (t^*)^{q-1}\r)|t|\ge \frac{\alpha}{2}|t|^2.
+    \] 
+    If $t=0$, the equality holds trivially. Otherwise, we have that
+    \[
+        \l(\alpha t^*+\beta q (t^*)^{q-1}\r)|t|\ge \frac{\alpha}{2}|t|^2\Leftrightarrow 2 t^*+\frac{2\beta q}{\alpha} (t^*)^{q-1}\ge |t|.
+    \]
+    Now,
+    \begin{align*}
+        2 t^*+\frac{2\beta q}{\alpha} (t^*)^{q-1}&=2t^*\l(1+\frac{\beta q}{\alpha}(t^{*})^{q-2}\r)\\
+        &=2t^*\l(1+\frac{\beta q}{\alpha}\frac{\alpha}{2\beta (1-q)}\r)\\
+        &=2t^*\l(1+\frac{q}{1-q}\r)\\
+        &=2t^*\l(\frac{1}{1-q}\r)>t^*,\\
+    \end{align*}
+    since $0<q<1$. Therefore, as we assume $t^*>|t|$,
+    $$
+    2 t^*+\frac{2\beta q}{\alpha} (t^*)^{q-1}=2t^*\l(\frac{1}{1-q}\r)>t^*>|t|
+    $$
+    and thus the reuslt follows by multipliying the last expression by $|t|$.
+\end{proof}
 
- \begin{figure}[ht]
-     \centering
-     \includegraphics[scale=1]{lqbiconj.png}
-     \caption{Graph of the function $\phi_q$ with $q=0.5$, $\alpha=0.4$, $b=1.6$, in red. The two continuous lines in blue represents the greatest continuous affine minorant of $\phi_q$ in $[-t^*, t^*]$. Notice that the points $A$ and $B$ represents the tangency point a which these lines cuts the graph of $\phi_q$. In addition, we see that the two lines $l_1$ and $l_2$ cuts in more that one point the graph of $\phi_q$ (when its slope is greater than $\phi'_q(t^*)$, or is below the blue lines (when its slope is lower than $\phi'(t^*)$.}
-     \label{fig:lqbiconj}
- \end{figure}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xmin=-6,
+    xmax=6,
+    ymin=-0.67,
+    ymax=6.46,
+    xtick={-6,-5,...,6},
+    ytick={0,1,...,6},
+    width=0.6\textwidth,
+    height=0.55\textwidth
+]
 
- \begin{figure}[ht]
-     \centering
-     \includegraphics[scale=0.16]{l0biconj.png}
-     \caption{Graph of the function $\phi_0$ with $\alpha=0.5$, $b=1.6$, in red. The blue continuous line represents again the greatest affine minorant for $\phi_0$ at $[-t_0^*, t_0^*]$. The construction of the biconjugate for $\phi_0$ is very similar to the case of the biconjugate of $\phi_q$.}
-     \label{fig:l0biconj}
- \end{figure}
+% --------- Parameters ----------
+\pgfmathsetmacro{\alpha}{0.4}
+\pgfmathsetmacro{\bpar}{1.6}
+\pgfmathsetmacro{\q}{0.5}
+\pgfmathsetmacro{\tstar}{2.5198420997897464}
+\pgfmathsetmacro{\phiT}{(\alpha/2)*(\tstar)^2 + \bpar*(abs(\tstar))^(\q)}
+\pgfmathsetmacro{\m}{\phiT/\tstar}
 
+% --------- Main function ----------
+\addplot [
+    line width=2.6pt,
+    red,
+    samples=300,
+    domain=-6:6
+]
+{(\alpha/2)*(x^2) + \bpar*(abs(x))^(\q)};
 
+% --------- Greatest affine minorant ----------
+\addplot [
+    line width=2.2pt,
+    blue,
+    samples=300,
+    domain=-6:6
+]
+{\m*abs(x)};
 
+% --------- Auxiliary dashed lines ----------
+\addplot [
+    line width=1.4pt,
+    dashed,
+    green!60!black,
+    samples=300,
+    domain=-6:6
+]
+{(\m+0.3)*abs(x)};
 
+\addplot [
+    line width=1.4pt,
+    dashed,
+    purple,
+    samples=300,
+    domain=-6:6
+]
+{(\m-0.3)*abs(x)};
 
+% --------- Vertical dashed lines ----------
+\addplot [dashed] coordinates {(-\tstar,0) (-\tstar,\phiT)};
+\addplot [dashed] coordinates {(\tstar,0) (\tstar,\phiT)};
+
+% --------- Points ----------
+\addplot [only marks, mark=*, mark size=3pt] coordinates {(\tstar,\phiT)};
+\addplot [only marks, mark=*, mark size=3pt] coordinates {(-\tstar,\phiT)};
+\addplot [only marks, mark=*, mark size=3pt] coordinates {(-\tstar,0)};
+\addplot [only marks, mark=*, mark size=3pt] coordinates {(\tstar,0)};
+
+% --------- Labels ----------
+\node at (axis cs:-3.1,0.3) {$-t^*$};
+\node at (axis cs:2.3,0.3) {$t^*$};
+
+\node at (axis cs:-2.6,6.1) {$l_1(t)$};
+\node at (axis cs:-5.2,5.2) {$l_2(t)$};
+
+\node at (axis cs:-2.5,4.3) {$A$};
+\node at (axis cs:2.2,4.3) {$B$};
+
+\end{axis}
+\end{tikzpicture}
+
+\caption{Graph of the function $\phi_q$ with $q=0.5$, $\alpha=0.4$, $b=1.6$, in red. The two continuous lines in blue represents the greatest continuous affine minorant of $\phi_q$ in $[-t^*, t^*]$. Notice that the points $A$ and $B$ represents the tangency point a which these lines cuts the graph of $\phi_q$. In addition, we see that the two lines $l_1$ and $l_2$ cuts in more that one point the graph of $\phi_q$ (when its slope is greater than $\phi'_q(t^*)$, or is below the blue lines (when its slope is lower than $\phi'(t^*)$).}
+\label{fig:phi_q_minorants}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines=middle,
+    xmin=-6,
+    xmax=6,
+    ymin=-0.8,
+    ymax=7,
+    xtick={-6,-5,...,6},
+    ytick={0,1,...,7},
+    width=0.6\textwidth,
+    height=0.55\textwidth
+]
+
+% Parameters
+\pgfmathsetmacro{\alpha}{0.5}
+\pgfmathsetmacro{\beta}{1.6}
+\pgfmathsetmacro{\tstar}{2.5298221281347035}
+\pgfmathsetmacro{\phiT}{(\alpha/2)*(\tstar)^2 + \beta}
+\pgfmathsetmacro{\m}{sqrt(2*\alpha*\beta)}
+
+% Main function phi(t)
+\addplot [
+    red,
+    line width=2pt,
+    samples=300,
+    domain=-6:6
+]
+{(\alpha/2)*(x^2) + \beta};
+
+% Affine minorant sqrt(2αβ)|t|
+\addplot [
+    blue,
+    line width=1.5pt,
+    samples=300,
+    domain=-6:6
+]
+{\m*abs(x)};
+
+% Vertical dashed lines at ±t*_0
+\addplot[dashed] coordinates {(-\tstar,0) (-\tstar,\phiT)};
+\addplot[dashed] coordinates {(\tstar,0) (\tstar,\phiT)};
+
+% Points
+\addplot[only marks, mark=*, mark size=3pt] coordinates {(-\tstar,\phiT)};
+\addplot[only marks, mark=*, mark size=3pt] coordinates {(\tstar,\phiT)};
+\addplot[only marks, mark=*, mark size=3pt] coordinates {(-\tstar,0)};
+\addplot[only marks, mark=*, mark size=3pt] coordinates {(\tstar,0)};
+
+% Labels
+\node at (axis cs:-3.0,0.3) {$-t_0^*$};
+\node at (axis cs:2.3,0.3) {$t_0^*$};
+
+\end{axis}
+\end{tikzpicture}
+
+\caption{Graph of the function $\phi_0$ with $\alpha=0.5$, $b=1.6$, in red. The blue continuous line represents again the greatest affine minorant for $\phi_0$ at $[-t_0^*, t_0^*]$. The construction of the biconjugate for $\phi_0$ is very similar to the case of the biconjugate of $\phi_q$.}
+\label{fig:phi_q_zero_case}
+\end{figure}
 
 
 \section{Numerical algorithms}
@@ -694,7 +890,12 @@ It holds that
 
 \subsection{The Difference of Convex functions (DC) algorithm}
 
-The theory of Difference of Convex  (DC) functions was developed in the later 70's by Toland first, and Singer \cite{toland, singer}, in the context of convex maximization theory in finite dimensional spaces. Later, several deep results and algorithms based on this theory was proposed by Pham Dinh Tao and Le Thi Hoai An in \cite{tao}. Inspired by this work, the infinite dimensional case for finding existence of solutions, necessary and sufficient optimal conditions of DC problems in the context of indefinite quadratic problems are deveolped in \cite{bonnans, yen}. The later novelty paper \cite{lim} deals with DC algorithms in general Hilbert spaces, proving sufficient conditions for the convergence of this algorithm and given a rate of convergence for indefinite quadratic programs. 
+The theory of Difference of Convex  (DC) functions was developed in the later 70's by Toland first, 
+and Singer \cite{toland, singer}, in the context of convex maximization theory in finite dimensional 
+spaces. Later, several deep results and algorithms based on this theory was proposed by Pham Dinh Tao 
+and Le Thi Hoai An in \cite{tao}. Inspired by this work, the infinite dimensional case for finding 
+existence of solutions, necessary and sufficient optimal conditions of DC problems in the context of 
+indefinite quadratic problems are deveolped in \cite{bonnans, yen}. The later novelty paper \cite{lim} deals with DC algorithms in general Hilbert spaces, proving sufficient conditions for the convergence of this algorithm and given a rate of convergence for indefinite quadratic programs. 
 
 One of the most appealing features of DC algorithms lies in the formulation and solution of two primal–dual problems, for which a wide range of numerical methods have been extensively studied and optimized. In the context of nonconvex optimal control problems, several works have addressed this approach; see, for instance, \cite{hinze, ioffe}. For optimal control problems involving $L^q$-type penalizations, the work \cite{merino2019} is particularly relevant. There, a Huber-type regularization is introduced to incorporate the nonconvex penalty, and by expressing the cost functional as the difference of two convex functions, a DC scheme based on two primal–dual problems is developed. One of these subproblems involves an $L^1$-penalized optimal control problem, for which a variety of efficient numerical solution methods are available.
 We consider the general setting of the DC algorithm. For a general Hilbert space $X$, let $g, h: X\to \mathbb{R}$ two convex and lower semicontinuous functions. Consider the minimization problem
