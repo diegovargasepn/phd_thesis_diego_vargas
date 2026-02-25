@@ -1,7 +1,5 @@
-\chapter{FEM discretization of $L^q$ penalized optimal control problems via variational concept}
-
-
-In this Chapter, we address the finite-element approximation for problem \eqref{eq:OCP}. We will rely on the Assumption \ref{as:phi_zero_measure}, the associated optimality systems for problem $(P)$ and its discretized version formulated below. The approximated optimal control problem is formulated using the variational discretization concept introduced in \cite{hinze05}. In contrast to differentiable problems, from the optimality conditions \eqref{eq:system2.5} we realize that the optimal control does not inherit extra regularity from the adjoint state. Therefore, the usual interpolation operators do not provide an interpolation error estimate to incorporate into our error analysis. The low regularity of the optimal control motivates the error approximation analysis via the variational discretization approach by posing a problem of the form
+\chapter{FEM discretization of (P)}\label{s:fem_analysis}
+In this section, we address the finite-element approximation for problem \eqref{eq:OCP}. We will rely on the Assumption \ref{as:phi_zero_measure}, the associated optimality systems for problem $(P)$ and its discretized version formulated below. The approximated optimal control problem is formulated using the variational discretization concept introduced in \cite{hinze05}. In contrast to differentiable problems, from the optimality conditions \eqref{eq:system2.5} we realize that the optimal control does not inherit extra regularity from the adjoint state. Therefore, the usual interpolation operators do not provide an interpolation error estimate to incorporate into our error analysis. The low regularity of the optimal control motivates the error approximation analysis via the variational discretization approach by posing a problem of the form
  $$\min_{u\in U_{ad}} J(S_h u,u),$$
  with $S_h$ being an approximation of the control-to-state operator $S$.
  
@@ -15,7 +13,7 @@ The coefficients $a_{ij}$ belong to $C^{0,1}(\bar \om)$ for $i,j = 1,\ldots,n$.
 
 \begin{assumption}\label{assupmtion_2}
 ~
-\begin{enumerate}[label=(\roman*)]
+\begin{enumerate}
     \item $\om$ is a convex polygonal domain in $\reals^2$ such that 
 	$\displaystyle \bigcup_{T\in\mathcal{T}_h} T=\bar{\om}$ and
 	\item  For two triangular elements $T_i$ and $T_j$, $i\not=j$ they share a vertex, a side or are disjoint.
@@ -43,13 +41,13 @@ Y_h&=\{y_h\in C(\bar{\om}):y_h|_{T}\in P_1(T),\ \forall T\in\mathcal{T}_h,\ y_h=
 
 where $P_1(T)$ denotes the set of linear--affine  continuous real-valued functions defined on $T$.
 
-\subsection{Finite element approximation of the state equation and its adjoint}	\label{sec:fem} 
+\section{Finite element approximation of the state equation and its adjoint}	\label{sec:fem} 
 The discrete state equation is defined as the following variational problem formulated in $Y_h \subset H_0^1(\om)$: for every $w\in L^2(\om)$, we seek a function $y_h \in Y_h$ satisfying  the equation
 %
 \begin{equation}\label{eq:state_h}
 a(y_h,v_h)=(w,v_h),\quad\forall v_h\in Y_h.
 \end{equation}
-This problem has a unique solution $y_h \in Y_h$ that continuously depends on the data $w$, see \cite{troeltzsch2010}. Analogous to the continuous counterpart, we denote the \emph{discrete} solution operator by $S_h: L^2(\om) \arrow Y_h$, which assigns to each $w$ the corresponding solution $y_h=y_h(w)$ satisfying \eqref{eq:state_h}. Moreover, the following estimate holds: there exists a positive constant $c$ (independent of $h$ and $w$) such that 
+This problem has a unique solution $y_h \in Y_h$ that continuously depends on the data $w$, see \cite{tro2010}. Analogous to the continuous counterpart, we denote the \emph{discrete} solution operator by $S_h: L^2(\om) \arrow Y_h$, which assigns to each $w$ the corresponding solution $y_h=y_h(w)$ satisfying \eqref{eq:state_h}. Moreover, the following estimate holds: there exists a positive constant $c$ (independent of $h$ and $w$) such that 
 \begin{equation*}
 \norm{y_h}_{H_0^1(\om)} \leq c \norm{w}_{L^2(\om)}.
 \end{equation*}
@@ -100,7 +98,7 @@ Similarly, the following estimates hold:
 \end{align}
 %
 %
-\subsection{Variational control discretization of the optimal control problem} 
+\section{Variational control discretization of the optimal control problem} 
 In this discretization concept, the control is not discretized explicitly \cite{hinze05}. Let us formulate the  discrete optimal control problem as follows: 
 \begin{equation}
 \tag{$P^h_{U_{ad}}$} \label{eq:OCP_h}
@@ -222,7 +220,7 @@ Now, we establish convergence properties of the approximated solutions $\tilde u
 \begin{theorem}\label{t:convergence}
 	Let $\bar u$ be the solution to \eqref{eq:OCP_c} satisfying Assumption \ref{as:phi_zero_measure} with associated state $\bar y= S\bar u +y_f$. Let $\{\tilde u_h\}$ be a sequence of solutions for \eqref{eq:OCPh_conv} for $h \to 0$, with associated states $\{\tilde y_h\}$, with $\tilde y_h= S_h\tilde u_h + y_f$. Then, %there exists a weakly convergent subsequence $\{\tilde u_h\}$  in $L^2(\om)$ (without renaming), such that 
 there exists a subsequence, denoted again by $\{\tilde u_h\}$, that converges weakly to $\tilde u \in U_{ad}$ as $h \to 0$, such  that  the following properties hold:
-\begin{enumerate}[label=(\roman*)]
+\begin{enumerate}
 	\item $\displaystyle\lim_{h \to 0} \tilde J(S_h \tilde u_h +y_f,\tilde u_h )= \inf_u \tilde J( S u + y_f,  u)= \inf_u J(Su+y_f,u)$.
 	
 \noindent If in addition, the adjoint state $\tilde\varphi$ associated to $\tilde u$ by \eqref{eq:costate} satisfies that the set $\{x\in\om: \tilde\varphi(x)=\omega_q\}$ has zero measure, then
@@ -310,7 +308,7 @@ $$\lim_{h\to 0} \int_{\om} \phi_q^{**}(\tilde u_h)dx =\int_{\om} \frac{\alpha}{2
 
 
 
-\subsection{Error estimates}
+\section{Error estimates}
 
 
 In this section, we investigate the approximation error of optimal controls by comparing the corresponding optimality information for problem \eqref{eq:OCP_c} and its variational discretization \eqref{eq:OCPh_conv}. 
@@ -337,7 +335,7 @@ In this section, we investigate the approximation error of optimal controls by c
 
 \begin{theorem}\label{t:error_est}
 	Let $(\bar y, \bar u, \bar \varphi)$ and $(\tilde y_h, \tilde u_h, \tilde\varphi_h)$ solutions of systems \eqref{eq:system_box} and \eqref{eq:system3}, respectively. Under the  Assumptions \ref{as:phi_zero_measure}, \ref{assupmtion_h2} and \ref{assupmtion_2}, the following results follow:
-\begin{enumerate}[label=(\roman*)]
+\begin{enumerate}
     \item There exists a positive constant $c$, independent of $h$,  such that  the corresponding optimal states satisfy
 	\begin{equation}\label{eq:error_state}
 		\norm{\bar y-\tilde y_h}_{L^2(\om)} \leq c h.
@@ -741,3 +739,390 @@ Following a similar reasoning as for \eqref{eq:est2}, and again, by the properti
      \]
 Then, the right-hand side in the last inequality is estimated with the same procedure as the righ-hand side in \eqref{eq:est2.1}.
 \end{proof}
+
+\section{Numerical Experiments}\label{s:experiments}
+
+This section is devoted to the numerical solution and approximation test of the optimal control problem $(P)$. We aim to provide numerical examples to illustrate the theory discussed in the previous sections. First, we briefly describe the Sequential Quadratic Hamiltonian method (SQH) applied for solving $(P)$, see \cite{borzi} for a complete study of the SQH method related to several non convex nor smooth optimal control problems, governed by partial differential equations. In the second part of this section, solve the finite element method approximations of $(P)$ to evaluate the rate of convergence with respect to the approximation parameter given by the size of the mesh $h$.
+
+\section{Sequential quadratic Hamiltonian Method}\label{s:SQH}
+
+We apply the SQH method for $(P)$, which is suitable to tackle directly nonsmoothness such as the ${L}^q$-quasinormed problems given by $(P)$ and its constrained version \eqref{eq:OCP_c} without any smooth regularization of the ${L}^q$-quasinorm penalty. The proposed algorithm is well defined due to the application of \cite[Theorem 7.4]{borzi}, by extending the Example therein to our case. 
+
+%The main difference is that we do not have an explicit form for $u$ in Step 4 except for the known cases $q=1/2$ or $q=2/3$. The requirement of the measurability of $u$ at each step can be obtained from known results \cite[Chapter 8.]{aubin}. A comparison of the performance of numerical solutions by state-of-the-art methods can be found in \cite{merino_vargas}. 
+Let us notice that the Pontryagin's maximum principle given  in \cite{itoku2014} can be applied directly to our case. The following choices verify the hypothesis of \cite[Theorem 2.2]{itoku2014}: $\ell(x,y(x))=\frac{1}{2}(y(x)-y_d)^2$, $h(u)=\frac{\alpha}{2}|u|^2+\beta|u|^q + \mathcal{I}_{[u_a,u_b]}(u) $, $f(\cdot,y,u(\cdot))=u(\cdot)$, $\langle Ey,\cdot\rangle_{X^*,X}=a(y,\cdot)$ and $X=H_0^1(\om)$. Therefore, the Hamiltonian for the control-constrained problem is defined as
+
+\[
+\mathcal{H}(x,y,u,\varphi):=\frac{1}{2}|y-y_d|^2+\frac{\alpha}{2}|u|^2+\beta|u|^q+\varphi u +\mathcal{I}_{[u_a,u_b]}(u).
+\]
+Moreover, for a given $\epsilon>0$, we consider the \emph{augmented} Hamiltonian \cite{SQHmet} defined by 
+$$\mathcal{K}_\epsilon(x,y,u,v,\varphi)=\mathcal{H}(x,y,u,\varphi)+\epsilon(u-v)^2;$$
+%
+the SQH algorithm requires finding $u$ such that 
+$$	\mathcal{K}_\epsilon(x,y, u,v,\varphi)\leq \mathcal{K}_\epsilon(x,y,w,v,\varphi),
+$$
+for all $w \in \reals$ and almost all $x\in\om$. The last relation amounts to
+\begin{align*}\label{eq:fonc_K}
+	\left(\epsilon+\frac{\alpha}{2}\right) u(x)^2 + & \beta | u(x)|^q + (\varphi(x) -2\epsilon v) u(x) + \mathcal{I}_{[u_a,u_b]}(u) \\
+&	\leq \left(\epsilon+\frac{\alpha}{2}\right)w^2 + \beta |w|^q + (\varphi(x) -2\epsilon v) w + \mathcal{I}_{[u_a,u_b]}(w),
+\end{align*}
+for almost all $x$ and all $w\in \reals$. In this way, the associated one-dimensional problem, depending on the parameter $\epsilon$, reads
+\begin{equation}\label{eq:1dlqK}
+	\bar u \displaystyle\in  \argmin_{t\in [u_a,u_b]} \left\{ \left(\epsilon+\frac{\alpha}{2}\right)t^2 + \beta |t|^q + (p -2\epsilon v) t \right\},
+\end{equation}
+where $p$ and $v$ are given. This problem can be solved using the operator $\Phi$ replacing the constant $\alpha$ by $\tilde{\alpha}:=\alpha +2\epsilon$, and $\Phi$ is replaced by  $\Phi( \cdot-2\epsilon v)$. Notice that the cases $q=\frac 12$ and $\frac 23$ can be computed by a direct evaluation of  $\Phi( \cdot-2\epsilon v)$. 
+
+Let us adjust the quantities  $\jump_q$ and $w_q$ according to the augmented Hamiltonian in \eqref{eq:1dlqK}: 
+\begin{equation}
+    \jump_q^\epsilon = \l( 2(1-q)\frac{\beta}{\alpha +2\epsilon} \r)^{\frac{1}{2-q}}, \quad \text{and} \quad  \omega_q^\epsilon = (\alpha + 2\epsilon)\jump_q^\epsilon + \beta q |\jump_q^\epsilon|^{q-1}.
+\end{equation}
+
+Additionally, we also update $\varphi_a$ and $\varphi_b$ defined in \eqref{eq:Phi2_c} to
+\begin{equation}
+\varphi^\epsilon_{a} =(\alpha +2\epsilon) u_a -  \beta q  |u_a|^{q-1}<0 \quad \text{ and }  \quad \varphi^\epsilon_{b} =(\alpha +2\epsilon) u_b +  \beta q  |u_b|^{q-1}>0. 
+\end{equation}
+
+The threshold quantity $\jump^\epsilon_q$ can be incorporated for the computation of  \eqref{eq:1dlqK}, reducing the number of variables to those nonsparse points of the domain.
+
+In practice, these solutions are computed approximately in each point of the discretized domain, requiring extra computational power.  However, a visible advantage of the SQH Algorithm \ref{al:sqh} is that these problems can be solved in parallel.
+
+Recalling that  $u_a,u_b\in \reals$ are such that $u_a<-\jump_q<0<\jump_q<u_b$, the SQH method is described below. %This assumption simplifies the convergence analysis of the algorithm. However, a similar analysis can be carried out without this assumption by redefining the operator $\Phi_q$ and the action of the projection  $\mathcal{P}_{[u_a,u_b]}$.
+
+\begin{comment}
+\begin{algorithm}[H]
+\caption{Sequential Quadratic Hamiltonian method (SQH) } %for ${L}^q$-penlized optimal control problems}
+\begin{algorithmic}[1]
+\item Choose  $\epsilon>0$, $\kappa>0$, $\eta>0$, $\sigma>1$, $\zeta\in(0,1)$, $\nu\in(0,\infty)$
+ \item Initialize $u_0$, $y_0$ by \eqref{eq:state} and $\varphi_0$ by \eqref{eq:costate}; set $k=0$
+ 
+ \While{ Until stopping criteria is satisfied}
+ \item  Compute $u(x)$ solution of 
+ \begin{equation}\label{eq:u_sqh} 
+	  \min_{u\in [u_a,u_b]} \left\{ \frac12\left(\alpha+ 2\epsilon\right)u^2 + \beta |u|^q + (\varphi^k(x) -2\epsilon u^k(x)) u \right\},
+\end{equation}
+    for almost all $x\in \om$.
+ \item Compute $y$ by solving \eqref{eq:state} and take $\tau:=\lVert u-u_k\rVert_{L^2(\om)}^2$.
+ \If{$J(y,u)-J(y^k,u^k)>-\eta\tau:$} take $\epsilon=\sigma\epsilon$,
+ \Else{ take $\epsilon=\zeta\epsilon$, $y^{k+1}=y$, $u^{k+1}=u$} and take $\varphi^{k+1}$ as the solution of \eqref{eq:costate} with $y^{k+1}$ given and set $k \leftarrow k+1$.
+ \EndIf
+ \If{$\tau<\kappa$}{ stop and return $u^k$},
+    \Else{ Go to step 4. }
+ \EndIf
+\EndWhile
+\end{algorithmic}\label{al:sqh}
+\end{algorithm}
+\end{comment}
+
+\begin{algorithm}[H]
+\caption{Sequential Quadratic Hamiltonian method (SQH)}
+\begin{algorithmic}[1]
+    \State Choose $\varepsilon>0$, $\kappa>0$, $\eta>0$, $\sigma>1$, $\zeta\in(0,1)$, $\nu\in(0,\infty)$, $\tau>\kappa$.
+    \State Initialize $u_0$, $y_0$ by \eqref{eq:state} and $\varphi_0$ by \eqref{eq:costate}; set $k=0$.
+
+    \While{$\tau > \kappa$}
+        \State Compute $u(x)$ solution of
+        \begin{equation}\label{eq:u_sqh} 
+            \min_{t \in [u_a,u_b]} 
+            \left\{
+                \frac12(\alpha + 2\varepsilon)t^2 
+                + \beta |t|^q
+                + (\varphi^k(x) - 2\varepsilon u^k(x))\,t
+            \right\},
+        \end{equation}
+        for almost all $x\in\Omega$.
+
+        \State Compute $y$ by solving \eqref{eq:state} and take $ \tau := \|u - u_k\|_{L^2(\Omega)}^2.$
+
+        \If{$J(y,u) - J(y^k,u^k) > -\eta\tau$}
+            \State Take $\varepsilon := \sigma \varepsilon$.
+        \Else 
+            \State Take $\varepsilon := \zeta\varepsilon$.
+            \State Set $y^{k+1} := y$, $u^{k+1} := u$.
+            \State Compute $\varphi^{k+1}$ as the solution of \eqref{eq:costate} with $y^{k+1}$.
+            \State $k \gets k+1$.
+        \EndIf
+    \EndWhile
+\end{algorithmic}
+\label{al:sqh}
+\end{algorithm}
+
+
+
+The proposed algorithm is well defined due to the application of \cite[Theorem 7.4]{borzi}, by extending the Example therein to our case. The requirement of the measurability of $u$ at each step can be obtained from known results \cite[Chapter 8]{aubin}. The main difference with respect to the case $q=0$ is that we do not have an explicit form for $u$ in Step 4, except for the known cases $q=1/2$ or $q=2/3$. In our experiments below, we used Matlab's \texttt{fmincon} solver to evaluate $\Phi_q(\cdot)$ by solving \eqref{eq:u_sqh}. A comparison of the performance of numerical solutions by state-of-the-art methods can be found in \cite{merino_vargas}. 
+
+
+We compute the experimental order of convergence (EOC) for the example below, by using a family of meshes with decreasing values of $h$. We do not know the exact solution; therefore, the usual procedure is to consider a solution in a thin mesh as the ``exact'' solution with mesh parameter $h_{ref}$. Then, the approximated solutions computed in the family of meshes with discretization parameter $h$ are compared with the ``exact"  solution for measuring the corresponding error in the $L^2(\om)$-norm. 
+%
+The experimental order of convergence  is calculated using the formula:
+\begin{equation*}%\label{err_conv_ex}
+	EOC:=\frac{\log(\|\tilde{u}_{h}-\tilde{u}_{h^*}\|)-\log(\|\tilde{u}_{h^*}-\bar{u}_{ref}\|)}{\log(h)-\log(h_{ref})}. 
+\end{equation*}
+where $\bar u_{ref}$ is a reference solution for mesh parameter $h_{ref}$. $\tilde u_{h^*}$ is considered as the ``exact'' solution for $h^*$  and $\tilde{u}_h$ the approximate  solution associated to a mesh of size $h$. 
+%
+\begin{example}
+In $\om =(0,1)\times (0,1)$ we consider the optimal control problem with parameters $A=-0.6\Delta$, $u_a=-4$, $u_b = 4$, $f=0$ and $y_d = 10(x+y)^2 \sin(16x)\sin(16y)$ for values  $q=0.1$, $0.5$ and $0.9$.
+\end{example}
+
+The numerical results for the approximation of this problem are given in Table \ref{tab:q09}, where the error $L^2(\om)$ of the approximated solution is provided for different mesh sizes. Additionally, the experimental order of convergence is reported. In the next series of experiments, we observe that the rate of error is approximately linear.  This does not contradict Theorem~\ref{t:error_estimate}, but it suggests that 
+a better convergence rate could be attainable. Although our analysis does not yield such a result for the original problem, The linear order of convergence observed in our experiments could be explained by Theorem~\ref{t:perturbed} which
+establishes a linear rate of convergence for (possibly small) perturbations of the original problem.
+\vspace{5mm}
+
+
+\begin{minipage}{0.5\textwidth}
+%\begin{figure}[ht!]
+\begin{tikzpicture}[scale=0.4]
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\begin{axis}[%
+width=6.028in,
+height=4.754in,
+at={(1.011in,0.642in)},
+scale only axis,
+xmode=log,
+xmin=0.0002,
+xmax=0.04,
+grid=major,
+tick label style={font=\large},
+%xminorticks=true,
+xtick={0.00028,    0.00057,    0.0011,    0.0022,    0.0045,    0.0091,    0.018,    0.036},
+xticklabels={$2.8\times 10^{-4}$,    $5.5\times 10^{-4}$,    $1.1\times 10^{-3}$,    $2.2\times 10^{-3}$,    $4.5\times 10^{-3}$,    $9.0\times 10^{-3}$,    $1.8\times 10^{-1}$,    $3.5\times 10^{0}$},%{-2,-0.5,0,0.5,2},
+ytick={0.001,0.004,0.0108,    0.0250,    0.0579,    0.1503,    0.3329,    0.5744,    1.7814},
+yticklabels={0.001,0.004,    0.03,    0.06,    0.15,    0.33,    0.60,    1.80},%{-1,0,1},
+ymode=log,
+ymin=0.0002,
+ymax=2.5,
+yminorticks=true,
+legend pos=north west,
+legend style={font=\Large, legend cell align=left, draw=white!15!black, scale=1},
+axis background/.style={fill=white}
+]
+\addplot [color=mycolor1, line width=1.0pt, mark=o, mark options={solid, mycolor1,scale=1}] %[color=mycolor8, line width=1.0pt, mark=*, mark options={solid, mycolor8,scale=0.15}]
+  table[row sep=crcr]{%
+ 0.036611652351682   1.765887651538395\\
+   0.018305826175841   0.786958041220327\\
+   0.009152913087920   0.333844052710593\\
+   0.004576456543960   0.117332328056215\\
+   0.002288228271980   0.037133887036001\\
+   0.001144114135990   0.011050624438639\\
+   0.000572057067995   0.003825890069851\\
+   0.000286028533998   0.001397145327629\\
+   };
+\addlegendentry{error}
+\addplot [color=mycolor2,  mark=o,line width=1.0pt]
+  table[row sep=crcr]{%
+0.0366116523516816	0.0366116523516816\\
+0.0183058261758408	0.0183058261758408\\
+0.00915291308792039	0.00915291308792039\\
+0.0045764565439602	0.0045764565439602\\
+0.0022882282719801	0.0022882282719801\\
+0.00114411413599005	0.00114411413599005\\
+0.000572057067995024	0.000572057067995024\\
+0.000286028533997512	0.000286028533997512\\};
+\addlegendentry{linear rate}
+\end{axis}
+
+\end{tikzpicture} 
+%		\caption{Experimental rate of convergence compared with linear rate}
+%		\label{fig:1}
+%	\end{figure}
+\captionsetup{font=footnotesize}
+\captionof{figure}{Experimental error of the optimal control for $q=0.9$}
+\label{fig:error q09}
+\end{minipage}
+\hspace{-3mm}
+\begin{minipage}{0.5\textwidth}
+\footnotesize
+%\begin{table}\label{tab:error1}
+\centering
+\begin{tabular}{ccccc}
+\hline
+$h$ &$\|\tilde y_h -\bar y\|_{L^2}$ & EOC & $\|\tilde u_h -\bar u\|_{L^2}$ & EOC \\
+\hline\hline
+0.0366 & 0.0518 & 1.78 & 1.7658 & 1.23 \\\hline
+0.0183 & 0.0081 & 1.67 & 0.7869 & 1.24 \\\hline
+0.0092 & 0.0018 & 1.59 & 0.3338 & 1.24 \\\hline
+0.0046 & 0.0006 & 1.61 & 0.1173 & 1.19 \\\hline
+0.0023 & 0.0002 & 1.58& 0.0371 & 1.10 \\\hline
+0.0011 &  0.0001 & 1.37 &0.0110 & 0.94 \\\hline
+0.0006 &  $1.3\times 10^{-5}$& 1.01 & 0.0038 & 0.80 \\\hline
+%0.0003 &  $3\times 10^{-6 }$& &0.0014 & 0.95 
+\end{tabular}
+%\end{table}
+\captionsetup{font=footnotesize}
+\captionof{table}{Experimental order of convergence for  $q=0.9$} 
+\label{tab:q09}
+\end{minipage}
+
+
+
+
+
+\begin{minipage}{0.5\textwidth}
+%\begin{figure}[ht!]
+\begin{tikzpicture}[scale=0.4]
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\begin{axis}[%
+width=6.028in,
+height=4.754in,
+at={(1.011in,0.642in)},
+scale only axis,
+xmode=log,
+xmin=0.00028,
+xmax=0.05,
+grid=major,
+tick label style={font=\large},
+%xminorticks=true,
+xtick={0 ,   0.0003 ,   0.0006,    0.0011 ,   0.0023 ,   0.0046,    0.0092 ,   0.0183 ,   0.0366},
+%xticklabels={0 ,   0.0040,    0.0080 ,   0.0120 ,   0.0160 ,   0.0200 ,   0.0240 ,   0.0280 ,   0.0320,    0.0360,    0.04},%{-2,-0.5,0,0.5,2},
+ytick={ 0.00025, 1e-3,0.004, 0.016,   0.0640  ,  0.2560  , 1.0240},
+yticklabels={$2.5\times 10^{-4}$, $1\times 10^{-3}$,  $4\times 10^{-3}$,  $1.6\times 10^{-2}$,   $6.4\times 10^{-2}$ ,    $2.5\times 10^{-1}$,    1},%{-1,0,1},
+ymode=log,
+ymin=0.0,
+ymax=4,
+yminorticks=true,
+legend pos=north west,
+legend style={font=\Large, legend cell align=left, draw=white!15!black, scale=1},
+axis background/.style={fill=white}
+]
+\addplot [color=mycolor1, line width=1.0pt, mark=o, mark options={solid, mycolor1,scale=1}] %[color=mycolor8, line width=1.0pt, mark=*, mark options={solid, mycolor8,scale=0.15}]
+  table[row sep=crcr]{%
+0.036611652351682   1.803381576744028\\
+   0.018305826175841   0.889253802037622\\
+   0.009152913087920   0.403049642353783\\
+   0.004576456543960   0.158492196915685\\
+   0.002288228271980   0.077685528057962\\
+   0.001144114135990   0.036041303168884\\
+   0.000572057067995   0.021601994699690\\
+   0.000286028533998   0.018605157286952\\
+};
+\addlegendentry{error}
+\addplot [color=mycolor2,  mark=o,line width=1.0pt]
+  table[row sep=crcr]{%
+   0.036611652351682   0.036611652351682\\
+   0.018305826175841   0.018305826175841\\
+   0.009152913087920   0.009152913087920\\
+   0.004576456543960   0.004576456543960\\
+   0.002288228271980   0.002288228271980\\
+   0.001144114135990   0.001144114135990\\
+   0.000572057067995   0.000572057067995\\
+   0.000286028533998   0.000286028533998\\
+   };
+\addlegendentry{linear rate}
+\end{axis}
+
+\end{tikzpicture} 
+%		\caption{Experimental rate of convergence compared with linear rate}
+%		\label{fig:1}
+%	\end{figure}
+\captionsetup{font=footnotesize}
+\captionof{figure}{Experimental error of the optimal control for $q=0.5$}
+\label{fig:error q05}
+\end{minipage}
+\hspace{-3mm}
+\begin{minipage}{0.5\textwidth}
+\footnotesize
+%\begin{table}\label{tab:error1}
+\centering
+\begin{tabular}{ccccc}
+\hline
+$h$ &$\|\tilde y_h -\bar y\|_{L^2}$ & EOC & $\|\tilde u_h -\bar u\|_{L^2}$ & EOC \\
+\hline\hline
+0.0366 & 0.0552 & 1.60 & 1.8033 & 1.02 \\\hline
+0.0183 & 0.0082 & 1.46   & 0.8892 & 1.03 \\\hline
+0.0092 & 0.0022 & 1.41   & 0.4030 &1.01 \\\hline
+0.0046 & 0.0014 & 1.53   & 0.1584 & 0.95 \\\hline
+0.0023 & 0.0002 & 1.30  & 0.0776&0.94 \\\hline
+0.0011 & $1.1\times 10^{-4}$ & 1.39& 0.0360& 0.89 \\\hline
+0.0006 & $3\times 10^{-5}$& 1.13&0.0216& 0.95 \\\hline
+0.0003 & $8\times 10^{-6}$& 0.90 &0.0186 & 1.30
+\end{tabular}
+%\end{table}
+\captionsetup{font=footnotesize}
+\captionof{table}{Experimental error of convergence  $q=0.5$} 
+\label{tab:q05}
+\end{minipage}
+
+\begin{minipage}{0.5\textwidth}
+%\begin{figure}[ht!]
+\begin{tikzpicture}[scale=0.38]
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.85000,0.32500,0.09800}%
+\begin{axis}[%
+width=6.028in,
+height=4.754in,
+at={(1.011in,0.642in)},
+scale only axis,
+xmode=log,
+xmin=0.00025,
+xmax=0.045,
+grid=major,
+tick label style={font=\large},
+%xminorticks=true,
+xtick={0.00025, 0.0005,    0.001,    0.002,    0.0045,    0.009,    0.02,    0.035},
+xticklabels={$2.5\times 10^{-4}$,    $5\times 10^{-4}$,    $1\times 10^{-3}$,    $2\times 10^{-3}$,    $4.5\times 10^{-3}$,    $9\times 10^{-3}$,    $2\times 10^{-2}$,    $3.5\times 10^{-1}$},%{-2,-0.5,0,0.5,2},
+ytick={ 0.0005,    0.001953,    0.0078125,    0.03125,    0.125,    0.5,    2},
+yticklabels={ $5\times 10^{-5}$,    $2\times 10^{-3}$,    0.075,    0.3,    0.125,    0.5,    2},%{-1,0,1},
+ymode=log,
+ymin=0.00022,
+ymax=2.8,
+yminorticks=true,
+legend pos=north west,
+legend style={font=\Large, legend cell align=left, draw=white!15!black, scale=1},
+axis background/.style={fill=white}
+]
+\addplot [color=mycolor1, line width=1.0pt, mark=o, mark options={solid, mycolor1,scale=1}] %[color=mycolor8, line width=1.0pt, mark=*, mark options={solid, mycolor8,scale=0.15}]
+  table[row sep=crcr]{%
+   0.036611652351682   1.826883886305578\\
+   0.018305826175841   0.944773344431918\\
+   0.009152913087920   0.459359193791866\\
+   0.004576456543960   0.184979175198573\\
+   0.002288228271980   0.092376089968164\\
+   0.001144114135990   0.045553412495355\\
+   0.000572057067995   0.028743807751765\\
+   0.000286028533998   0.014299868037441\\};
+\addlegendentry{error}
+\addplot [color=mycolor2,  mark=o,line width=1.0pt]
+  table[row sep=crcr]{%
+0.0366116523516816	0.0366116523516816\\
+0.0183058261758408	0.0183058261758408\\
+0.00915291308792039	0.00915291308792039\\
+0.0045764565439602	0.0045764565439602\\
+0.0022882282719801	0.0022882282719801\\
+0.00114411413599005	0.00114411413599005\\
+0.000572057067995024	0.000572057067995024\\
+0.000286028533997512	0.000286028533997512\\};
+\addlegendentry{linear rate}
+\end{axis}
+\end{tikzpicture} 
+%		\caption{Experimental rate of convergence compared with linear rate}
+%		\label{fig:1}
+%	\end{figure}
+\captionsetup{font=footnotesize}
+\captionof{figure}{Experimental error of the optimal control for $q=0.1$}
+\label{fig:error q01}
+\end{minipage}
+%
+\hspace{-3mm}
+\begin{minipage}{0.5\textwidth}
+\footnotesize
+%\begin{table}\label{tab:error1}
+\centering
+\begin{tabular}{ccccc}
+\hline
+$h$ &$\|\tilde y_h -\bar y\|_{L^2}$ & EOC & $\|\tilde u_h -\bar u\|_{L^2}$ & EOC \\
+\hline\hline
+0.0366 & 0.05699 & 1.48 & 1.8268 & 0.96 \\\hline
+0.0183 & 0.00793 & 1.31 &0.9447 & 0.96 \\\hline
+0.0092 & 0.00190 & 1.20 &0.4593 & 0.95 \\\hline
+0.0046 & 0.00101 & 1.25 &0.1849 & 0.89 \\\hline
+0.0023 & 0.00023 & 1.09 &0.0923 & 0.87 \\\hline
+0.0011 & 0.00014 & 1.18 &0.0455 & 0.83 \\\hline
+0.0006 & 0.00003& 0.87 &0.0287 & 0.89 \\\hline
+0.0003 & 0.00002& 0.94 &0.0142 & 0.83 \\\hline
+\end{tabular}
+%\end{table}
+\captionsetup{font=footnotesize}
+\captionof{table}{Experimental order of convergence (EOC) for  $q=0.1$} 
+\label{tab:q01}
+\end{minipage}

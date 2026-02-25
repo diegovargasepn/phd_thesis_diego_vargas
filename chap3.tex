@@ -9,14 +9,14 @@
 		let $\Omega\subset\mathbb{R}^n$, $n=2,3$, be an open domain with Lipschitz boundary, 
 		and for $u\in L^2(\Omega)$ define
 		\[
-		\norm{u}_{L^0(\om)}:=\int_{\om} \chi_{\{x\in\om: u(x)\ne 0\}}\; dx
+		\jzero{u}:=\int_{\om} \chi_{\{x\in\om: u(x)\ne 0\}}\; dx
 		\]
-		Then, clearly $\norm{u}_{L^0(\om)}$ measure the volume of the set $\{x\in\om: u(x)\ne 0\}$. So, if this term
+		Then, clearly $\jzero{u}$ measure the volume of the set $\{x\in\om: u(x)\ne 0\}$. So, if this term
 		is added as a penalizer over a cost function, the optimal control must satisfy a minimum support's
-		volume criterion. However, the term $\norm{u}_{L^0(\om)}$ is nor convex nor differentiable, even nor continuous. Thus, the control problem penalized with 
+		volume criterion. However, the term $\jzero{u}$ is nor convex nor differentiable, even nor continuous. Thus, the control problem penalized with 
 		such a penalizer cannot be analyzed with standar tools of theory of optimal control problems or
-		convex analysis. Evenmore, in general, problems penalized with the $\norm{\cdot}_{L^0(\om)}$ term might not
-		have a solution. Problems with the term $\norm{\cdot}_{L^0(\om)}$ are called $L^0$ penalized problems.
+		convex analysis. Evenmore, in general, problems penalized with the $\jzero{\cdot}$ term might not
+		have a solution. Problems with the term $\jzero{\cdot}$ are called $L^0$ penalized problems.
 		
 		In this context, $L^q$ penalizers arise as a sort of regularization of the so called $L^0$ sparse 
 		problems.  However, depending on the regulization parameters present in the cost function, optimal controls
@@ -44,8 +44,8 @@
 		 Let $q\in [0,1)$. For a measurable function $u: \om \to \reals$, 
 		 we define the $L^q$ regularizer as
 		\begin{equation}\label{eq:l_q}
-			\norm{u} _{L^q(\om)}:=\begin{cases}
-				\norm{u}_{L^q(\om)}:=\int_{\om} |u(x)|^q \; dx,& q>0,\\
+			\jq{u}:=\begin{cases}
+				\int_{\om} |u(x)|^q \; dx,& q>0,\\
 				\mbox{meas }\{x\in \om: u(x)\ne 0\}&q=0.
 			\end{cases}
 		\end{equation}
@@ -60,12 +60,12 @@
 
 		then	
 		\begin{equation}\label{eq:l_0}
-			\norm{u}_{L^0(\om)}:=\int_{\om} |u(x)|_{0} \; dx,
+			\jzero{u}:=\int_{\om} |u(x)|_{0} \; dx,
 		\end{equation}
 				
-		By definition, it is clear that, for any $q\in[0,1)$, the term $\norm{\cdot}_{L^q(\Omega)}$ is nonconvex. 
-		In the case $q>0$, the functional $\norm{\cdot}_{L^q(\Omega)}$ is continuous but not differentiable, 
-		whereas for $q=0$ it is not even continuous. The nonconvexity of $\norm{\cdot}_{L^q(\Omega)}$ entails the loss of weak 
+		By definition, it is clear that, for any $q\in[0,1)$, the term $\jq{\cdot}$ is nonconvex. 
+		In the case $q>0$, the functional $\jq{\cdot}$ is continuous but not differentiable, 
+		whereas for $q=0$ it is not even continuous. The nonconvexity of $\jq{\cdot}$ entails the loss of weak 
 		lower semicontinuity when compared with continuous and convex penalizations. Consequently, the combined lack of 
 		differentiability and weak lower semicontinuity implies that the existence of solutions for optimal control problems 
 		penalized by such terms cannot be inferred using standard tools from convex analysis.
@@ -155,7 +155,7 @@ $0<q\le1$ and $t\ge 0$, we have that for any $u,v\in L^{q}(\om)$,
 Finally, by the convexity of the function $t\mapsto t^{\frac{1}{q}}$ for any $t$,
 \begin{equation}\label{eq:1/q_convexity}
 \begin{aligned}
-\l(\norm{u}_{L^q(\om)}^q+ \norm{v}_{L^q(\om)}^q\r)^{\frac{1}{q}}
+\l(\norm{u}_{L^q(\om)}^q + \norm{v}_{L^q(\om)}^q\r)^{\frac{1}{q}}
 &= 2^{\frac{1}{q}}
 \l(\frac{\norm{u}_{L^q(\om)}^q+ \norm{v}_{L^q(\om)}^q}{2}\r)^{\frac{1}{q}}\\
 &\le 2^{\frac{1}{q}}
@@ -230,7 +230,7 @@ quite evident, specially by the lack of convexity of the sets $B_q$.}
 \end{remark}
 
 \begin{proposition}\label{prop:continuity_lq}
-The quasi--norm $\norm{\cdot}_{q}$ defines a continuous 
+The functional $\jq{\cdot}$ defined by $\jq{u}=\norm{u}_{L^q(\om)}^q$ defines a continuous 
 Nemitski operator from $L^p(\om)$ to $L^p(\om)$ for any $p\ge 1$.
 \end{proposition}
 
@@ -248,7 +248,7 @@ Nemitski operator from $L^p(\om)$ to $L^p(\om)$ for any $p\ge 1$.
 	so Theorem \ref{thm:nemitski} applies, and the conclusion follows.
 \end{proof}
 
-By Proposition \ref{prop:continuity_lq}, the quasi--norm $\norm_{\cdot}_{L^q(\om)}$
+By Proposition \ref{prop:continuity_lq}, $\jq{\cdot}$
 is continuous from $L^2(\om)$ to $L^2(\om)$. However, its lack of convexity makes
 that this one is not a weakly lower semicontinuous function.
 
@@ -260,50 +260,50 @@ $\om$, endowed with the so called Eckeland distance
 	d_0(f,g)=\text{meas}\{x\in\om: f(x)\neq g(x)\}, \quad \text{ for all }f, g\in L^0(\om).
 \end{equation}
 With this metric, the space is a metric complete space, see \cite{ito-kunisch2014}. 
-Moreover, it is clear that $\norm{f}_{L^{0}(\om)}=d_0(f,0)$ for all $f\in L^0(\om)$.
-However, the term $\norm{f}_{L^0(\om)}$ is not even a quasi--norm. In fact,
+Moreover, it is clear that $\jzero{f}=d_0(f,0)$ for all $f\in L^0(\om)$.
+However, the term $\jzero{f}$ is not even a quasi--norm. In fact,
 it is not homogeneous, because for any measurable function $f$ with a support with positive measure,
 $\lambda f$ still have a support with positive measure for any $|\lambda|>0$. Thus 
-$\norm{\lambda f}_{L^0(\om)}=\norm{f}_{L^0(\om)}$. However, if $|\lambda|\ne 1$, then
-$|\lambda|\norm{f}_{L^0(\om)}\ne \norm{f}_{L^0(\om)}$. However, since $\norm{\cdot}_{L^0(\om)}$
+$\jzero{\lambda f}=\jzero{\cdot}$. However, if $|\lambda|\ne 1$, then
+$|\lambda|\jzero{\cdot}\ne \jzero{\cdot}$. However, since $\jzero{\cdot}$
 comes from the metric $d_0$, the positivity and the triangular inequality hold. For these
-reasons, we call the term $\norm{\cdot}_{L^0(\om)}$ as a \textit{pseudonorm}. In addition,
+reasons, we call the term $\jzero{\cdot}$ as a \textit{pseudonorm}. In addition,
 due to the lack of homogenity of this term, it is not convex, because for any 
 $0<\lambda<1$, we have 
 \[
-\norm{\lambda f+(1-\lambda)0}_{L^0(\om)}=\norm{\lambda f}_{L^0(\om)}=\norm{f}_{L^0(\om)}
+\jzero{\lambda f+(1-\lambda)0}=\jzero{\lambda f}=\jzero{f}
 \]
-so, if we need that $\norm{f}_{L^0(\om)}\le \lambda \norm{f}_{L^0(\om)}$, it is 
+so, if we need that $\jzero{f}\le \lambda \jzero{f}$, it is 
 necessary that $\lambda\ge 1$, which is impossible since we assume $\lambda<1$. 
 
-In addition, the funtion $\norm{\cdot}_{L^0(\om)}$ is not 
+In addition, the funtion $\jzero{\cdot}$ is not 
 continuous from $L^p(\om)$ to $L^p(\om)$. Indeed, for $\om=(0,1)$ and taking
 the Lebesgue measure, define $f_n(x):=n^{-\frac{1}{p}}$. Therefore, 
 \[
 \int_{0}^{1}|f_n(x)|^p\; dx = \int_{0}^{1}|n^{-1/p}|^p=n^{-1},
 \]
-thus $\norm{f_n}=n^{-1/p}\to 0$ as $n\to \infty$. On the other hand, since 
-$f_n(x)\ne 0$ for any $x\in (0,1)$, we have that $\norm{f_n}_{L^0(0,1)}=1$.
-for all $n\in \mathbb{N}$. However, $\norm{f_n}_{L^0(0,1)}=0$. Thus, 
-$f_n\to 0$ but $1=\norm{f_n}_{L^0(0,1)}\nrightarrow 0=\norm{0}_{L^0(0,1)}$.
+thus $\jzero{f_n}=n^{-1/p}\to 0$ as $n\to \infty$. On the other hand, since 
+$f_n(x)\ne 0$ for any $x\in (0,1)$, we have that $\jzero{f_n}=1$.
+for all $n\in \mathbb{N}$. However, $\jzero{f_n}=0$. Thus, 
+$f_n\to 0$ but $1=\jzero{f_n}_{L^0(0,1)}\nrightarrow 0=\jzero{0}$.
 
-However, the term $\norm{\cdot}_{L^0(\om)}$ is weakly lower semicontinuous.The 
+However, the term $\jzero{\cdot}$ is weakly lower semicontinuous.The 
 following result shows this fact.
 
 \begin{proposition}
 	Let $\om$ a set with finite measure. Then, the function 
-	$\norm{\cdot}_{L^0(\om)}$ is lower semicontinous in $L^p(\om)$ for any $p\ge 1$,
+	$\jzero{\cdot}$ is lower semicontinous in $L^p(\om)$ for any $p\ge 1$,
 	i.e., if $(f_n)_{n\in\mathbb{N}}$ is a strong convergent 
 	sequence in $L^p(\om)$ which converges to some $f$ in $L^p(\om)$, then
 	then
 	\[
-	\norm{f}_{L^0(\om)}\le \liminf_{n\to\infty} \norm{f_n}_{L^0(\om)}.
+	\jzero{f}\le \liminf_{n\to\infty} \jzero{f_n}.
 	\]
 \end{proposition}
 \begin{proof}
 	Recall that
 	\[
-	\norm{f}_{L^0(\om)}=\text{meas}\{x\in \om: f(x)\neq 0\}, \quad \norm{f_n}_{L^0(\om)}=\text{meas}\{x\in \om: f_n(x)\neq 0\}.
+	\jzero{f}=\text{meas}\{x\in \om: f(x)\neq 0\}, \quad \jzero{f_n}=\text{meas}\{x\in \om: f_n(x)\neq 0\}.
 	\]
 	Take $l=\liminf_{n\to\infty}\text{meas}\{x\in \om: f_n(x)\neq 0\}$. Then, by definition there exists
 	a subsequence $(f_{n_k})_{k\in\mathbb{N}}\subset (f_{n})$ such that
@@ -324,16 +324,16 @@ following result shows this fact.
 	for enough large $k$, $f_{n_k}(x)\ne 0$, thus $\chi_{x\in \om:\{f_{n_k}(x)\neq 0\}}(x)=1$. Therefore, 
 	$\lim_{n\to \infty}\chi_{x\in \om:\{f_{n_k}(x)\neq 0\}}(x)=1$. By Fatou's Lemma:
 	\begin{align*}
-	\norm{f}_{L^0(\om)}&=\int_{\om}\chi_{\{x\in \om:f(x)\neq 0\}}(x)\; dx \\
+	\jzero{f}&=\int_{\om}\chi_{\{x\in \om:f(x)\neq 0\}}(x)\; dx \\
 	&\le \int_{\om}\liminf_{k\to\infty} \chi_{\{x\in \om:f_{n_k}(x)\neq 0\}}(x)\; dx\\
 	&\le \liminf_{k\to\infty} \int_{\om} \chi_{\{x\in \om:f_{n_k}(x)\neq 0\}}(x)\; dx\\
 	&=\liminf_{k\to \infty} \text{meas}\{x\in \om: f_{n_k}(x)\neq 0\}\\
 	&=l\\
-	&=\liminf_{n\to\infty}\text{meas}\{x\in \om: f_n(x)\neq 0\}=\liminf_{n\to\infty}\norm{f_n}_{L^0(\om)}.
+	&=\liminf_{n\to\infty}\text{meas}\{x\in \om: f_n(x)\neq 0\}=\liminf_{n\to\infty}\jzero{f_n}.
 	\end{align*}
 \end{proof}
 
-Despite the lower semicontinuity of $\norm{\cdot}_{L^0(\om)}$, the weakly lower semicontinuity
+Despite the lower semicontinuity of $\jzero{\cdot}$, the weakly lower semicontinuity
 of this over reflexive Banach spaces are missing by its lost of convexity. Therefore, the
 application of the direct methods from variational analysis are not longer available. Evenmore
 the existence of solution for these kind of problems is not guaranteed, see for example \cite{ito-kunisch2014}
@@ -342,7 +342,7 @@ for an extensive review of optimal control problems with $L^0$ regularizers.
 		\subsection{Problem formulation}
 		Let $\alpha, \beta>0$.For $q\in [0,1)$, define the cost function  $J: H_0^1(\om) \times L^2(\om) \to \reals$ as
 	\begin{equation}\label{eq:cost_q}
-		\displaystyle J{(y,u)}= ~\frac{1}{2}\| y-y_d \|^2_{L^2(\om)}+\frac{ \alpha}{2}\|u\|^2_{L^2(\om)}+\beta \norm{u}_{L^q(\om)}.
+		\displaystyle J{(y,u)}= ~\frac{1}{2}\| y-y_d \|^2_{L^2(\om)}+\frac{ \alpha}{2}\|u\|^2_{L^2(\om)}+\beta \jq{u}.
 	\end{equation}
 
 We formulate the following distributed optimal control problem using the objective functional \eqref{eq:cost_q} as follows:
