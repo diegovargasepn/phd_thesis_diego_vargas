@@ -499,7 +499,7 @@ Since $\bar u \geq \jump_q>\jump_q/(2^{1/(2-q)})$, and since $g'(\bar u)=0$,we h
 		\end{cases}
 	\end{equation}
 		%
-	\begin{remark}
+	\begin{remark}\label{rmrk:exact_threshold}
 	Equation \eqref{eq:PHI1} is semi-implicitly defined and, in practice, it has to be solved approximately. However, for the special cases $q=\frac12$ and $q=\frac23$, explicit solutions can be derived from the proximal mapping discussed in \cite{CaoZungXu2013}. Indeed, calculating the proximal of $|\cdot|^q$ we get:
 	$$\text{\textnormal{prox}}_{|\cdot|^q,\frac{1}{\rho}}(t):=\argmin_{u} \l\{|u|^q+\frac{1}{2\rho}|u-t|^2 \r \},$$
 that is equivalent to minimize $g$ defined in \eqref{eq:1dlq} for $\rho=\frac{2\beta}{\alpha}$. Thus, for $q=\frac12$, we have that $\varPhi_{\frac12}$ becomes:
@@ -1141,7 +1141,9 @@ Thus, $|\bar u|$ is bounded away from 0 in its support, and $\jump_q$ in
 	
 \section{Incorporating box-constraints on the controls}
 Let us briefly discuss the modifications of the previous results to incorporate control constraints. Let \(u_a\) and \(u_b\) be real numbers such that \(u_a \leq 0 \leq u_b\) with \(u_a \ne u_b\). We define the set \(U = \{t \in \mathbb{R} : u_a \leq t \leq u_b\}\),  and  
-\begin{equation}\label{eq:Uad}  u \in U_{ad}= \{ v \in L^2(\om): v(x) \in U, \, \text{ for almost all }x\in \om \}. \end{equation}
+\begin{equation}\label{eq:Uad} 
+	 u \in U_{ad}= \{ v \in L^2(\om): v(x) \in U, \, \text{ for almost all }x\in \om \}. 
+\end{equation}
 Then, the maximum principle is applied to the extended Hamiltonian:
 \begin{equation} 
 \mathcal H(x,y,u,p)= \frac{1}{2}|y-y_d(x)|^2 + \frac{\alpha}{2}u^2 + \beta |u|^q + pu + \mathcal{I}_{U}(u),	\nonumber
@@ -1150,6 +1152,16 @@ which leads to the optimization	problem \eqref{eq:1dlq}, restricted to the inter
 \begin{equation}\label{eq:1dlqc}
 		\bar u \displaystyle\in  \argmin_{u\in [u_a,u_b]} \left\{ \frac{\alpha}{2}u^2+\beta |u|^q + pu \right\},
 	\end{equation}
+Then, the constrained optimal control problem is formulated by
+\begin{equation}
+		\tag{$ P_{U_{ad}}$} \label{eq:OCP_c}
+			\displaystyle\min_{(y,u)} J(y,u) = \frac12 \norm{y-y_d}^2_{L^2(\om)} + \int_\om \phi_q(u) \, dx, \qquad \text{subject to: } \, u\in U_{ad},
+\end{equation}
+where $y$ is a solution of the state equation \eqref{eq:variational_formulation}. The partially 
+convexified optimal control problem with control constraints, denoted by 
+$(\tilde P_{U_{ad}})$, is considered as well by replacing $\phi_q$ by $\phi_q^{**}$.
+
+
 
 We have learned from the unconstrained case that $|\bar u(x)|>\jump_q>0$ or $\bar u (x)=0$. Therefore, for simplicity, we further assume that $u_a < - \jump_q<0<\jump_q<u_b$. Therefore, the solution $\bar u $ is characterized by 
 \begin{equation}\label{eq:Phi2_c}

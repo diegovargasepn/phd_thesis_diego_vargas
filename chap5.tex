@@ -1,5 +1,13 @@
 \chapter{FEM discretization of (P)}\label{s:fem_analysis}
-In this section, we address the finite-element approximation for problem \eqref{eq:OCP}. We will rely on the Assumption \ref{as:phi_zero_measure}, the associated optimality systems for problem $(P)$ and its discretized version formulated below. The approximated optimal control problem is formulated using the variational discretization concept introduced in \cite{hinze05}. In contrast to differentiable problems, from the optimality conditions \eqref{eq:system2.5} we realize that the optimal control does not inherit extra regularity from the adjoint state. Therefore, the usual interpolation operators do not provide an interpolation error estimate to incorporate into our error analysis. The low regularity of the optimal control motivates the error approximation analysis via the variational discretization approach by posing a problem of the form
+In this Chapter, we address the finite-element approximation for problem \eqref{eq:OCP}. 
+We will rely on the Assumption \ref{as:phi_zero_measure}, the associated optimality systems for 
+problem $(P)$ and its discretized version formulated below. The approximated optimal control problem
+ is formulated using the variational discretization concept introduced in \cite{hinze05}. 
+ In contrast to differentiable problems, from the optimality conditions \eqref{eq:system2.5} we 
+ realize that the optimal control does not inherit extra regularity from the adjoint state. 
+ Therefore, the usual interpolation operators do not provide an interpolation error estimate to 
+ incorporate into our error analysis. The low regularity of the optimal control motivates the error
+  approximation analysis via the variational discretization approach by posing a problem of the form
  $$\min_{u\in U_{ad}} J(S_h u,u),$$
  with $S_h$ being an approximation of the control-to-state operator $S$.
  
@@ -41,13 +49,13 @@ Y_h&=\{y_h\in C(\bar{\om}):y_h|_{T}\in P_1(T),\ \forall T\in\mathcal{T}_h,\ y_h=
 
 where $P_1(T)$ denotes the set of linear--affine  continuous real-valued functions defined on $T$.
 
-\section{Finite element approximation of the state equation and its adjoint}	\label{sec:fem} 
+\section{Problem formulation}	\label{sec:fem} 
 The discrete state equation is defined as the following variational problem formulated in $Y_h \subset H_0^1(\om)$: for every $w\in L^2(\om)$, we seek a function $y_h \in Y_h$ satisfying  the equation
 %
-\begin{equation}\label{eq:state_h}
+\begin{equation}\label{eq:variational_formulation_h}
 a(y_h,v_h)=(w,v_h),\quad\forall v_h\in Y_h.
 \end{equation}
-This problem has a unique solution $y_h \in Y_h$ that continuously depends on the data $w$, see \cite{tro2010}. Analogous to the continuous counterpart, we denote the \emph{discrete} solution operator by $S_h: L^2(\om) \arrow Y_h$, which assigns to each $w$ the corresponding solution $y_h=y_h(w)$ satisfying \eqref{eq:state_h}. Moreover, the following estimate holds: there exists a positive constant $c$ (independent of $h$ and $w$) such that 
+This problem has a unique solution $y_h \in Y_h$ that continuously depends on the data $w$, see \cite{troeltzsch2010}. Analogous to the continuous counterpart, we denote the \emph{discrete} solution operator by $S_h: L^2(\om) \arrow Y_h$, which assigns to each $w$ the corresponding solution $y_h=y_h(w)$ satisfying \eqref{eq:variational_formulation_h}. Moreover, the following estimate holds: there exists a positive constant $c$ (independent of $h$ and $w$) such that 
 \begin{equation*}
 \norm{y_h}_{H_0^1(\om)} \leq c \norm{w}_{L^2(\om)}.
 \end{equation*}
@@ -56,7 +64,7 @@ Similarly, the state $y_h$ associated to a control $u\in L^2(\om)$ can be writte
 Also, we denote by $S_h^*$ the adjoint of $S_h$ which is characterized by $z_h = S_h^* w$ satisfying the variational problem:
 \begin{subequations}\label{eq:stat*h}
     \begin{align}
-a^*(z_h,v_h)=&(w,v_h)_{L^2(\om)}, \quad \forall v_h \in Y_h, \label{eq:state*h}\\
+a^*(z_h,v_h)=&(w,v_h)_{L^2(\om)}, \quad \forall v_h \in Y_h, \label{eq:variational_formulation*h}\\
 \|z_h\|_{H_0^1(\om)} \leq & c^* \|w\|_{L^2(\om)}, \label{eq:ineq_state*h}
 \end{align}
 \end{subequations}
@@ -64,16 +72,22 @@ for some constant $c^*>0$, independent of $h$.
 
 
 %
-The approximation for linear-elliptic problems of the form \eqref{eq:state} is well known, {see \cite[Sections 17-18]{ciarlet1990}} for the proof of the following rate of approximation result. Moreover, Assumptions \ref{assupmtion_h2} and \ref{assupmtion_2} imply that the solutions of problems \eqref{eq:state_formul} and \eqref{eq:costate} belong to $H^2(\om)$. Then, the optimal error estimates are obtained that we summarize in the next Proposition, see \cite[Theorem 18.1-19.2]{ciarlet1990}.
+The approximation for linear-elliptic problems 
+of the form \eqref{eq:variational_formulation} 
+is well known, {see \cite[Sections 17-18]{ciarlet1990}} 
+for the proof of the following rate of approximation result.
+Moreover, Assumptions \ref{assupmtion_h2} and 
+\ref{assupmtion_2} imply that the solutions of problems 
+\eqref{eq:variational_formulation} and \eqref{eq:costate} belong to $H^2(\om)$. Then, the optimal error estimates are obtained that we summarize in the next Proposition, see \cite[Theorem 18.1-19.2]{ciarlet1990}.
 %
 \begin{proposition}\label{p:state_estimate}
-Let $y$ and $y_h$ be the solutions, associated to a control $u \in L^2(\om)$, of equations \eqref{eq:state} and \eqref{eq:state_h}, respectively. There exists a constant $c>0$, independent of $h$ and $y$, such that 
+Let $y$ and $y_h$ be the solutions, associated to a control $u \in L^2(\om)$, of equations \eqref{eq:variational_formulation} and \eqref{eq:variational_formulation_h}, respectively. There exists a constant $c>0$, independent of $h$ and $y$, such that 
 \begin{equation}	
-\|y-y_h\|_{L^2(\om)} + h\|y-y_h\|_{H^1(\om)}\leq c h^2\|y\|_{H^2(\om)}. \label{eq:state_estimate}
+\|y-y_h\|_{L^2(\om)} + h\|y-y_h\|_{H^1(\om)}\leq c h^2\|y\|_{H^2(\om)}. \label{eq:variational_formulation_estimate}
 \end{equation}
-Analogously, for $z$ and $z_h$ solutions of \eqref{eq:state*} and its discretization \eqref{eq:state*h}, respectively, there exists a constant $c^*$ independent of $h$ and $z$, such that the estimate is satisfied:
+Analogously, for $z$ and $z_h$ solutions of \eqref{eq:variational_formulation*} and its discretization \eqref{eq:variational_formulation*h}, respectively, there exists a constant $c^*$ independent of $h$ and $z$, such that the estimate is satisfied:
 \begin{equation}	
-	\|z-z_h\|_{L^2(\om)} + h\|z-z_h\|_{H^1(\om)}\leq c^* h^2 \|z\|_{H^2(\om)}. \label{eq:state_estimate*}
+	\|z-z_h\|_{L^2(\om)} + h\|z-z_h\|_{H^1(\om)}\leq c^* h^2 \|z\|_{H^2(\om)}. \label{eq:variational_formulation_estimate*}
 \end{equation}
 \end{proposition}
 %
@@ -96,9 +110,7 @@ Similarly, the following estimates hold:
 	&\|S^*-S^*_h\|_{L^2 \to H_0^1}	\leq   ch, \label{eq:S-S_h-3} \\
 	&\|S^*-S^*_h\|_{L^2 \to L^2}	\leq  ch^2. \label{eq:S-S_h-4}
 \end{align}
-%
-%
-\section{Variational control discretization of the optimal control problem} 
+ 
 In this discretization concept, the control is not discretized explicitly \cite{hinze05}. Let us formulate the  discrete optimal control problem as follows: 
 \begin{equation}
 \tag{$P^h_{U_{ad}}$} \label{eq:OCP_h}
@@ -140,23 +152,24 @@ Following the same procedure utilized in the previous sections, we establish fir
 \end{subequations}
 
 
-In this optimality system, the discrete control is implicitly discretized by $\tilde\varphi_h$ through the evaluation of $\tilde\Phi_q$ and projected on the admissible set $U_{ad}$. We assume that the evaluation $\tilde\Phi_q$ as well as the projection $\mathcal{P}_{[u_a,u_b]}$ are computed exactly. The relation \eqref{eq:Phi2_c} is explicitly computable except for the set $\{|\tilde\varphi_h|>\omega_q, \text{ and } \phi_a <-\varphi_h < \varphi_b \}$. As mentioned in Remark \ref{rmrk:2}, in this set the relation given by \eqref{eq:Phi2_c} corresponds to the optimality condition of the one-dimensional problem:
+In this optimality system, the discrete control is implicitly 
+discretized by $\tilde\varphi_h$ through the evaluation of 
+$\tilde\Phi_q$ and projected on the admissible set $U_{ad}$. 
+We assume as same as in the Chapter 2, that the evaluation 
+$\tilde\Phi_q$ as well as the 
+projection $\mathcal{P}_{[u_a,u_b]}$ are computed exactly. 
+Moreover, \eqref{eq:Phi2_c} is explicitely computable except for the set 
+$\{|\tilde\varphi_h|>\omega_q, \text{ and } \phi_a <-\varphi_h < \varphi_b \}$. 
+Moreover,as mentioned in Remark \ref{rmrk:exact_threshold}, in this set the relation given by \eqref{eq:Phi2_c} 
+corresponds to the optimality condition of the one-dimensional problem:
 \begin{equation}\label{eq:Phi_eval}
-\mathcal{P}_{[u_a,u_b]}(\tilde\Phi_q (\tilde\varphi_h(x)))=\argmin_{t\in [u_a,u_b]} \left\{ \frac{\alpha}{2}t^2 + \beta |t|^q + \tilde\varphi_h(x) t \right\} \end{equation}
-For the values  $q=\frac12$ and $q=\frac23$, explicit solutions can be derived from the proximal mapping discussed in \cite{CaoZungXu2013}. Indeed, calculating the proximal mapping for $q=\frac12$, we find that $\varPhi_{\frac12}$ becomes:
-		\begin{equation}\label{eq:PHI1 q=1/2}
-		%
-		\Phi_{\frac12} ({\varphi}) =	
-		%
-		\begin{cases}
-			\phantom{-}\frac23 |{\varphi}|\big(1+\cos(\frac{2\pi-2 {\varphi}_{\beta/{\alpha}} }{3})) \big), & \text{ if } {\varphi} > \frac{54^{\frac13}}{4}\big(\frac{2\beta}{{\alpha}}\big)^{\frac23}, \\
-			-\frac23 |{\varphi}|\big(1+\cos(\frac{2\pi-2{\varphi}_{\beta/{\alpha}}}{3})) \big), & \text{ if } \tilde{\varphi}< -\frac{54^{\frac13}}{4}\big(\frac{2\beta}{{\alpha}}\big)^{\frac23}, \\
-			\phantom{-}0,                          &	\text{ otherwise},
-		\end{cases}
-	\end{equation}
-${\varphi}_{\beta/\alpha}=\arccos \Big(\frac{\beta}{4{\alpha}}\big(\frac{|\varphi|}{3}\big)^{-\frac23}\Big)$. A similar expression is deduced for $q=2/3$, see \cite{CaoZungXu2013}. 
-
-For general $q \in (0,1)$, in practice the evaluation of $\mathcal{P}_{[u_a,u_b]}(\tilde\Phi_q (\tilde\varphi_h(x)))$ requires solving \eqref{eq:Phi_eval} numerically. We exclude this source of numerical error in our approximation analysis since \eqref{eq:Phi_eval} can be computed with higher precision compared to the discretization error of the finite element approximation.
+\mathcal{P}_{[u_a,u_b]}(\tilde\Phi_q (\tilde\varphi_h(x)))=\argmin_{t\in [u_a,u_b]} \left\{ \frac{\alpha}{2}t^2 + \beta |t|^q + \tilde\varphi_h(x) t \right\} 
+\end{equation}
+and explicitely computable for $q=1/2$ and $q=2/3$. However, for general $q \in (0,1)$, in practice 
+the evaluation of $\mathcal{P}_{[u_a,u_b]}(\tilde\Phi_q (\tilde\varphi_h(x)))$ requires solving 
+\eqref{eq:Phi_eval} numerically. We exclude this source of numerical error in our approximation analysis 
+since \eqref{eq:Phi_eval} can be computed with higher precision compared to the discretization error of 
+the finite element approximation.
 
 %
 
@@ -396,7 +409,7 @@ Relations \eqref{eq:corollary_1_1} are also obtained from \eqref{eq:est2} and es
 The limit in \eqref{eq:corollary_1_1} is merely a consequence. 
 \end{proof}
 
-Thanks to  Assumptions \ref{assupmtion_h2} and \ref{assupmtion_2}, the adjoint state $\varphi$ solution of \eqref{eq:state*} also belongs to $H^2(\om)$. Thus, for $\varphi_h$ satisfying \eqref{eq:stat*h}, we can establish a bound for the error $\norm{\varphi_h-\varphi}_{L^\infty(\om)}$, according to {\cite[Theorem 19.3]{ciarlet1990}. 
+Thanks to  Assumptions \ref{assupmtion_h2} and \ref{assupmtion_2}, the adjoint state $\varphi$ solution of \eqref{eq:variational_formulation*} also belongs to $H^2(\om)$. Thus, for $\varphi_h$ satisfying \eqref{eq:stat*h}, we can establish a bound for the error $\norm{\varphi_h-\varphi}_{L^\infty(\om)}$, according to {\cite[Theorem 19.3]{ciarlet1990}. 
 
 Analogous to the problem \eqref{eq:OCP}, we consider the sets $\om^h_*,\om_{w_q}^{h}, \om_{0}^h$ defined  by 
 \begin{subequations}\label{eq:om_parts_h}
@@ -742,19 +755,20 @@ Then, the right-hand side in the last inequality is estimated with the same proc
 
 \section{Numerical Experiments}\label{s:experiments}
 
-This section is devoted to the numerical solution and approximation test of the optimal control problem $(P)$. We aim to provide numerical examples to illustrate the theory discussed in the previous sections. First, we briefly describe the Sequential Quadratic Hamiltonian method (SQH) applied for solving $(P)$, see \cite{borzi} for a complete study of the SQH method related to several non convex nor smooth optimal control problems, governed by partial differential equations. In the second part of this section, solve the finite element method approximations of $(P)$ to evaluate the rate of convergence with respect to the approximation parameter given by the size of the mesh $h$.
+This section is devoted to the numerical solution and approximation test of the optimal control problem $(P)$. We aim to provide numerical examples to illustrate the theory discussed in the previous sections. First, we briefly describe the Sequential Quadratic Hamiltonian method (SQH) applied for solving $(P)$, see \cite{borzi2023} for a complete study of the SQH method related to several non convex nor smooth optimal control problems, governed by partial differential equations. In the second part of this section, solve the finite element method approximations of $(P)$ to evaluate the rate of convergence with respect to the approximation parameter given by the size of the mesh $h$.
 
 \section{Sequential quadratic Hamiltonian Method}\label{s:SQH}
 
-We apply the SQH method for $(P)$, which is suitable to tackle directly nonsmoothness such as the ${L}^q$-quasinormed problems given by $(P)$ and its constrained version \eqref{eq:OCP_c} without any smooth regularization of the ${L}^q$-quasinorm penalty. The proposed algorithm is well defined due to the application of \cite[Theorem 7.4]{borzi}, by extending the Example therein to our case. 
+We apply the SQH method for $(P)$, which is suitable to tackle directly nonsmoothness such as the ${L}^q$-quasinormed problems given by $(P)$ and its constrained version \eqref{eq:OCP_c} without any smooth regularization of the ${L}^q$-quasinorm penalty. The proposed algorithm is well defined due to the application of \cite[Theorem 7.4]{borzi2023}, by extending the Example therein to our case. 
 
 %The main difference is that we do not have an explicit form for $u$ in Step 4 except for the known cases $q=1/2$ or $q=2/3$. The requirement of the measurability of $u$ at each step can be obtained from known results \cite[Chapter 8.]{aubin}. A comparison of the performance of numerical solutions by state-of-the-art methods can be found in \cite{merino_vargas}. 
-Let us notice that the Pontryagin's maximum principle given  in \cite{itoku2014} can be applied directly to our case. The following choices verify the hypothesis of \cite[Theorem 2.2]{itoku2014}: $\ell(x,y(x))=\frac{1}{2}(y(x)-y_d)^2$, $h(u)=\frac{\alpha}{2}|u|^2+\beta|u|^q + \mathcal{I}_{[u_a,u_b]}(u) $, $f(\cdot,y,u(\cdot))=u(\cdot)$, $\langle Ey,\cdot\rangle_{X^*,X}=a(y,\cdot)$ and $X=H_0^1(\om)$. Therefore, the Hamiltonian for the control-constrained problem is defined as
+Let us notice that the Pontryagin's maximum principle given  in \cite{ito-kunisch2014} can be applied directly to our case. The following choices verify the hypothesis of \cite[Theorem 2.2]{ito-kunisch2014}: $\ell(x,y(x))=\frac{1}{2}(y(x)-y_d)^2$, $h(u)=\frac{\alpha}{2}|u|^2+\beta|u|^q + \mathcal{I}_{[u_a,u_b]}(u) $, $f(\cdot,y,u(\cdot))=u(\cdot)$, $\langle Ey,\cdot\rangle_{X^*,X}=a(y,\cdot)$ and $X=H_0^1(\om)$. Therefore, the Hamiltonian for the control-constrained problem is defined as
 
 \[
 \mathcal{H}(x,y,u,\varphi):=\frac{1}{2}|y-y_d|^2+\frac{\alpha}{2}|u|^2+\beta|u|^q+\varphi u +\mathcal{I}_{[u_a,u_b]}(u).
 \]
-Moreover, for a given $\epsilon>0$, we consider the \emph{augmented} Hamiltonian \cite{SQHmet} defined by 
+Moreover, for a given $\epsilon>0$, we consider the 
+\emph{augmented} Hamiltonian \cite{borzi2023} defined by 
 $$\mathcal{K}_\epsilon(x,y,u,v,\varphi)=\mathcal{H}(x,y,u,\varphi)+\epsilon(u-v)^2;$$
 %
 the SQH algorithm requires finding $u$ such that 
@@ -792,7 +806,7 @@ Recalling that  $u_a,u_b\in \reals$ are such that $u_a<-\jump_q<0<\jump_q<u_b$, 
 \caption{Sequential Quadratic Hamiltonian method (SQH) } %for ${L}^q$-penlized optimal control problems}
 \begin{algorithmic}[1]
 \item Choose  $\epsilon>0$, $\kappa>0$, $\eta>0$, $\sigma>1$, $\zeta\in(0,1)$, $\nu\in(0,\infty)$
- \item Initialize $u_0$, $y_0$ by \eqref{eq:state} and $\varphi_0$ by \eqref{eq:costate}; set $k=0$
+ \item Initialize $u_0$, $y_0$ by \eqref{eq:variational_formulation} and $\varphi_0$ by \eqref{eq:costate}; set $k=0$
  
  \While{ Until stopping criteria is satisfied}
  \item  Compute $u(x)$ solution of 
@@ -800,7 +814,7 @@ Recalling that  $u_a,u_b\in \reals$ are such that $u_a<-\jump_q<0<\jump_q<u_b$, 
 	  \min_{u\in [u_a,u_b]} \left\{ \frac12\left(\alpha+ 2\epsilon\right)u^2 + \beta |u|^q + (\varphi^k(x) -2\epsilon u^k(x)) u \right\},
 \end{equation}
     for almost all $x\in \om$.
- \item Compute $y$ by solving \eqref{eq:state} and take $\tau:=\lVert u-u_k\rVert_{L^2(\om)}^2$.
+ \item Compute $y$ by solving \eqref{eq:variational_formulation} and take $\tau:=\lVert u-u_k\rVert_{L^2(\om)}^2$.
  \If{$J(y,u)-J(y^k,u^k)>-\eta\tau:$} take $\epsilon=\sigma\epsilon$,
  \Else{ take $\epsilon=\zeta\epsilon$, $y^{k+1}=y$, $u^{k+1}=u$} and take $\varphi^{k+1}$ as the solution of \eqref{eq:costate} with $y^{k+1}$ given and set $k \leftarrow k+1$.
  \EndIf
@@ -816,7 +830,7 @@ Recalling that  $u_a,u_b\in \reals$ are such that $u_a<-\jump_q<0<\jump_q<u_b$, 
 \caption{Sequential Quadratic Hamiltonian method (SQH)}
 \begin{algorithmic}[1]
     \State Choose $\varepsilon>0$, $\kappa>0$, $\eta>0$, $\sigma>1$, $\zeta\in(0,1)$, $\nu\in(0,\infty)$, $\tau>\kappa$.
-    \State Initialize $u_0$, $y_0$ by \eqref{eq:state} and $\varphi_0$ by \eqref{eq:costate}; set $k=0$.
+    \State Initialize $u_0$, $y_0$ by \eqref{eq:variational_formulation} and $\varphi_0$ by \eqref{eq:costate}; set $k=0$.
 
     \While{$\tau > \kappa$}
         \State Compute $u(x)$ solution of
@@ -830,7 +844,7 @@ Recalling that  $u_a,u_b\in \reals$ are such that $u_a<-\jump_q<0<\jump_q<u_b$, 
         \end{equation}
         for almost all $x\in\Omega$.
 
-        \State Compute $y$ by solving \eqref{eq:state} and take $ \tau := \|u - u_k\|_{L^2(\Omega)}^2.$
+        \State Compute $y$ by solving \eqref{eq:variational_formulation} and take $ \tau := \|u - u_k\|_{L^2(\Omega)}^2.$
 
         \If{$J(y,u) - J(y^k,u^k) > -\eta\tau$}
             \State Take $\varepsilon := \sigma \varepsilon$.
@@ -847,7 +861,16 @@ Recalling that  $u_a,u_b\in \reals$ are such that $u_a<-\jump_q<0<\jump_q<u_b$, 
 
 
 
-The proposed algorithm is well defined due to the application of \cite[Theorem 7.4]{borzi}, by extending the Example therein to our case. The requirement of the measurability of $u$ at each step can be obtained from known results \cite[Chapter 8]{aubin}. The main difference with respect to the case $q=0$ is that we do not have an explicit form for $u$ in Step 4, except for the known cases $q=1/2$ or $q=2/3$. In our experiments below, we used Matlab's \texttt{fmincon} solver to evaluate $\Phi_q(\cdot)$ by solving \eqref{eq:u_sqh}. A comparison of the performance of numerical solutions by state-of-the-art methods can be found in \cite{merino_vargas}. 
+The proposed algorithm is well defined due to the application 
+of \cite[Theorem 7.4]{borzi2023}, by extending the Example 
+therein to our case. The requirement of the measurability of 
+$u$ at each step can be obtained from known results 
+\cite[Chapter 8]{aubin1990}. The main difference with 
+respect to the case $q=0$ is that we do not have an explicit 
+form for $u$ in Step 4, except for the known cases $q=1/2$ or 
+$q=2/3$. In our experiments below, we used Matlab's 
+\texttt{fmincon} solver to evaluate $\Phi_q(\cdot)$ by 
+solving \eqref{eq:u_sqh}.
 
 
 We compute the experimental order of convergence (EOC) for the example below, by using a family of meshes with decreasing values of $h$. We do not know the exact solution; therefore, the usual procedure is to consider a solution in a thin mesh as the ``exact'' solution with mesh parameter $h_{ref}$. Then, the approximated solutions computed in the family of meshes with discretization parameter $h$ are compared with the ``exact"  solution for measuring the corresponding error in the $L^2(\om)$-norm. 
